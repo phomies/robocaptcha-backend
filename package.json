@@ -8,6 +8,7 @@
         "start:prod": "npm run build && node ./dist/src/server.js"
     },
     "dependencies": {
+        "@types/crypto-js": "^4.1.0",
         "apollo-server-express": "^3.6.2",
         "cookie-parser": "~1.4.4",
         "crypto-js": "^4.1.1",
