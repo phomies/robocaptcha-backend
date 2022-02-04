@@ -29,7 +29,7 @@ const startApolloServer = async () => {
     app.use('/', indexRouter);
 
     app.listen(port, () => {
-        console.log(`App is listening on port ${port}`);
+        console.log(`App is listening on port ${server.graphqlPath}`);
     });
 };
 
