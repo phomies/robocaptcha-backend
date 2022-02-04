@@ -16,6 +16,10 @@ const startApolloServer = async () => {
     const server = new ApolloServer({
         typeDefs,
         resolvers,
+        formatError: (err: any) => {
+            // TODO - FORMAT ERROR BEFORE SENDING BACK TO CLIENT
+            return err;
+        }
     });
 
     await server.start();
