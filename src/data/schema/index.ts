@@ -4,7 +4,7 @@ export const typeDefs = gql`
     scalar Date
 
     type User {
-        id: ID!
+        _id: ID!
         name: String
         password: String
         email: String
@@ -14,9 +14,9 @@ export const typeDefs = gql`
     }
 
     input UserInput {
-        name: String
-        email: String
-        password: String
+        name: String!
+        email: String!
+        password: String!
     }
 
     type Query {
@@ -24,6 +24,6 @@ export const typeDefs = gql`
     }
 
     type Mutation {
-        createUser(payload: UserInput): User
+        createUser(userInput: UserInput): User
     }
 `;

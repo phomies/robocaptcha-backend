@@ -1,10 +1,9 @@
-import { IUser } from 'common/interface';
 import { User } from '../../db';
 import mongoose from 'mongoose';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
 
 export const UserQueries = {
-    getAllUsers: async (root: any) => {
+    getAllUsers: async () => {
         try {
             const users = await User.find();
             return users;
@@ -15,10 +14,10 @@ export const UserQueries = {
 };
 
 export const UserMutations = {
-    createUser: async (root: any, payload: IUser) => {
+    createUser: async (_: any, { userInput }: any) => {
         try {
-            const user = await User.find({
-                email: payload.email,
+            const user = await User.findOne({
+                email: userInput.email,
             });
 
             if (user) {
@@ -27,12 +26,13 @@ export const UserMutations = {
 
             const newUser = new User({
                 _id: new mongoose.Types.ObjectId(),
-                name: payload.name,
-                password: hmacSHA256(payload.password, process.env.HASH_KEY || '').toString(),
-                email: payload.email,
+                name: userInput.name,
+                password: hmacSHA256(userInput.password, process.env.HASH_KEY || '').toString(),
+                email: userInput.email,
             });
 
             const savedUser = await newUser.save();
+            console.log(savedUser);
             return savedUser;
         } catch (error) {
             throw error;
