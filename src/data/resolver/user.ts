@@ -42,7 +42,23 @@ export const UserMutations = {
     },
     updateUser: async (_: any, { userInput }: any) => {
         const user = await getUserById(userInput._id);
-        Object.assign(user, userInput);
+
+        if (userInput.password !== undefined) {
+            if (userInput.newPassword === undefined) {
+                throw new Error('New password is empty');
+            }
+
+            const passwordHash = hmacSHA256(userInput.password, process.env.HASH_KEY || '').toString();
+            if (user.password !== passwordHash) {
+                throw new Error('Invalid password');
+            }
+
+            // Reassign new password
+            userInput.password = hmacSHA256(userInput.newPassword, process.env.HASH_KEY || '').toString();
+        }
+
+        const { newPassword, ...userDetails } = userInput;
+        Object.assign(user, userDetails);
 
         await user.save();
         return user;

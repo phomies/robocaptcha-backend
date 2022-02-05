@@ -23,6 +23,7 @@ export const typeDefs = gql`
         _id: ID!
         name: String
         password: String
+        newPassword: String
         email: String
         whitelist: [Int]
         blacklist: [Int]
