@@ -1,41 +1,17 @@
 import { gql } from 'apollo-server-express';
+import fs from 'fs';
+import path from 'path';
 
-export const typeDefs = gql`
-    scalar Date
+const importGraphQL = (file: string) => {
+    return fs.readFileSync(path.join(__dirname, file), 'utf-8');
+};
 
-    type User {
-        _id: ID
-        name: String
-        password: String
-        email: String
-        dateJoined: Date
-        whitelist: [Int]
-        blacklist: [Int]
-    }
+const gqlWrapper = (...files: string[]) => {
+    return gql`
+        ${files}
+    `;
+};
 
-    input NewUserInput {
-        name: String!
-        email: String!
-        password: String!
-    }
+const schema = importGraphQL('./schema.graphql');
 
-    input UserInput {
-        _id: ID!
-        name: String
-        password: String
-        newPassword: String
-        email: String
-        whitelist: [Int]
-        blacklist: [Int]
-    }
-
-    type Query {
-        getAllUsers: [User]
-    }
-
-    type Mutation {
-        createUser(userInput: NewUserInput): User
-        updateUser(userInput: UserInput): User
-        deleteUser(id: ID): Boolean
-    }
-`;
+export const typeDefs = gqlWrapper(schema);
