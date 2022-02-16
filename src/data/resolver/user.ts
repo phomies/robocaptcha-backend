@@ -28,6 +28,7 @@ export const UserMutations = {
             name: userInput.name,
             password: hmacSHA256(userInput.password, process.env.HASH_KEY || '').toString(),
             email: userInput.email,
+            verificationLevel: userInput.verificationLevel
         });
 
         const savedUser = await newUser.save();
