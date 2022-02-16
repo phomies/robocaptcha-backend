@@ -30,6 +30,23 @@ input UserInput {
     blacklist: [Int]
 }
 
+type Call {
+    _id: ID
+    date: Date
+    from: Int
+    toUserId: ID
+    action: String
+}
+
+type Notification {
+    _id: ID
+    userId: ID,
+    content: String,
+    read: Boolean,
+    url: String,
+    dateTime: Date,
+}
+
 type Query {
     getAllUsers: [User]
 }

@@ -1,4 +1,6 @@
 import { connect, model, connection } from 'mongoose';
+import { callSchema } from './schema/callSchema';
+import { notificationSchema } from './schema/notificationSchema';
 import { userSchema } from './schema/userSchema';
 
 connect(process.env.MONGODB_URL || '');
@@ -9,5 +11,7 @@ db.on('error', () => {
 });
 
 const User = model('User', userSchema);
+const Call = model('Call', callSchema);
+const Notification = model('Notification', notificationSchema);
 
-export { User };
+export { User, Call, Notification };

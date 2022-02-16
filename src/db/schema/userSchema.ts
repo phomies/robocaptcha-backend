@@ -8,4 +8,6 @@ export const userSchema = new Schema({
     dateJoined: { type: Date, default: Date.now() },
     whitelist: [Number],
     blacklist: [Number],
+    callHistory: [{type: Types.ObjectId, ref: 'Call'}],
+    notificationHistory: [{type: Types.ObjectId, ref: 'Notification'}],
 });
