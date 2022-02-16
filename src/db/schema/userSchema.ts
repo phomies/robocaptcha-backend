@@ -8,6 +8,7 @@ export const userSchema = new Schema({
     dateJoined: { type: Date, default: Date.now() },
     whitelist: [Number],
     blacklist: [Number],
+    verificationLevel: {type: Number, min: 0, max: 3},
     callHistory: [{type: Types.ObjectId, ref: 'Call'}],
     notificationHistory: [{type: Types.ObjectId, ref: 'Notification'}],
 });

@@ -12,6 +12,9 @@ type User {
     dateJoined: Date
     whitelist: [Int]
     blacklist: [Int]
+    verificationLevel: Int
+    callHistory: [ID]
+    notificationHistory: [ID]
 }
 
 input NewUserInput {
