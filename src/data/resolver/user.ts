@@ -27,6 +27,7 @@ export const UserMutations = {
             _id: new mongoose.Types.ObjectId(),
             name: userInput.name,
             password: hmacSHA256(userInput.password, process.env.HASH_KEY || '').toString(),
+            phoneNumber: userInput.phoneNumber,
             email: userInput.email,
             verificationLevel: userInput.verificationLevel
         });

@@ -9,6 +9,7 @@ type User {
     name: String
     password: String
     email: String
+    phoneNumber: Int
     dateJoined: Date
     whitelist: [Int]
     blacklist: [Int]
@@ -30,6 +31,7 @@ input NewUserInput {
     name: String!
     email: String!
     password: String!
+    phoneNumber: Int!
     verificationLevel: Int
 }
 
@@ -39,9 +41,11 @@ input UserInput {
     password: String
     newPassword: String
     email: String
+    phoneNumber: Int
     whitelist: [Int]
     blacklist: [Int]
     verificationLevel: Int
+    subscriptionHistory: [Subscription]
 }
 
 type Call {
