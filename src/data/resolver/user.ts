@@ -11,6 +11,17 @@ export const UserQueries = {
             throw error;
         }
     },
+    getUser: async (_: any, { id }: any) => {
+        try {
+            const user = await User.findOne({_id: id});
+            if (!user) {
+                throw new Error('User does ont exist');
+            }
+            return user;
+        } catch(error) {
+            throw error;
+        }
+    }
 };
 
 export const UserMutations = {

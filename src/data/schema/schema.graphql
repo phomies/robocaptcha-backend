@@ -45,7 +45,7 @@ input UserInput {
     whitelist: [Int]
     blacklist: [Int]
     verificationLevel: Int
-    subscriptionHistory: [Subscription]
+
 }
 
 type Call {
@@ -67,6 +67,7 @@ type Notification {
 
 type Query {
     getAllUsers: [User]
+    getUser(id: ID): User
 }
 
 type Mutation {
