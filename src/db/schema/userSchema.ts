@@ -9,6 +9,13 @@ export const userSchema = new Schema({
     whitelist: [Number],
     blacklist: [Number],
     verificationLevel: {type: Number, min: 0, max: 3, required: true},
+    subscriptionHistory: [{
+        dateStart: {type: Date},
+        dateEnd: {type: Date},
+        amount: Number,
+        transactionId: String,
+        type: String
+    }],
     callHistory: [{type: Types.ObjectId, ref: 'Call'}],
     notificationHistory: [{type: Types.ObjectId, ref: 'Notification'}],
 });

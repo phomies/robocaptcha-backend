@@ -13,8 +13,17 @@ type User {
     whitelist: [Int]
     blacklist: [Int]
     verificationLevel: Int
+    subscriptionHistory: [Subscription]
     callHistory: [ID]
     notificationHistory: [ID]
+}
+
+type Subscription {
+    dateStart: Date
+    dateEnd: Date
+    amount: Float
+    transactionId: String
+    type: String
 }
 
 input NewUserInput {
