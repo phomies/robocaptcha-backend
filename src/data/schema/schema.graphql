@@ -30,6 +30,7 @@ input NewUserInput {
     name: String!
     email: String!
     password: String!
+    verificationLevel: Int
 }
 
 input UserInput {
