@@ -1,0 +1,118 @@
+{
+    "info": {
+        "_postman_id": "c907a85a-9d28-4c33-b2af-6f919dd3412e",
+        "name": "CallCAPTCHA (generated)",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "mutations",
+            "item": [
+                {
+                    "name": "createUser",
+                    "id": "a9b4de0b-9cf7-4c66-98d8-bfc65be9406f",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation createUser ($userInput: NewUserInput) {\n    createUser (userInput: $userInput) {\n        _id\n        name\n        password\n        email\n        dateJoined\n        whitelist\n        blacklist\n    }\n}",
+                                "variables": "{\n  \"userInput\": {\n    \"name\": \"\",\n    \"email\": \"\",\n    \"password\": \"\"\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}",
+                            "host": [
+                                "{{url}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "updateUser",
+                    "id": "25b391db-a99f-4e56-94a2-72b433df142f",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation updateUser ($userInput: UserInput) {\n    updateUser (userInput: $userInput) {\n        _id\n        name\n        password\n        email\n        dateJoined\n        whitelist\n        blacklist\n    }\n}",
+                                "variables": "{\n  \"userInput\": {\n    \"_id\": 0,\n    \"name\": \"\",\n    \"password\": \"\",\n    \"newPassword\": \"\",\n    \"email\": \"\",\n    \"whitelist\": [\n      0\n    ],\n    \"blacklist\": [\n      0\n    ]\n  }\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}",
+                            "host": [
+                                "{{url}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "deleteUser",
+                    "id": "cff7bc86-971f-4ee5-83b9-ec7ace438a41",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "mutation deleteUser ($id: ID) {\n    deleteUser (id: $id)\n}",
+                                "variables": "{\n  \"id\": 0\n}"
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}",
+                            "host": [
+                                "{{url}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ],
+            "id": "a0e584ef-86de-4cbd-8381-d9b372bca3d7"
+        },
+        {
+            "name": "queries",
+            "item": [
+                {
+                    "name": "getAllUsers",
+                    "id": "8728a833-1f02-4e1f-a10b-3a287fb58735",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "graphql",
+                            "graphql": {
+                                "query": "query getAllUsers {\n    getAllUsers {\n        _id\n        name\n        password\n        email\n        dateJoined\n        whitelist\n        blacklist\n    }\n}",
+                                "variables": "{}"
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}",
+                            "host": [
+                                "{{url}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ],
+            "id": "3a033a67-b365-461f-9a4b-f1fff2abf4a9"
+        }
+    ],
+    "variable": [
+        {
+            "id": "url",
+            "key": "url",
+            "value": "",
+            "type": "any",
+            "description": "URL for the request."
+        }
+    ]
+}
