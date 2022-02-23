@@ -9,8 +9,8 @@ type User {
     name: String
     password: String
     email: String
-    phoneNumber: Int
-    maskedNumber: Int
+    phoneNumber: String
+    maskedNumber: String
     dateJoined: Date
     whitelist: [Int]
     blacklist: [Int]
@@ -32,8 +32,8 @@ input NewUserInput {
     name: String!
     email: String!
     password: String!
-    phoneNumber: Int!
-    maskedNumber: Int!
+    phoneNumber: String!
+    maskedNumber: String!
     verificationLevel: Int
 }
 
@@ -43,17 +43,27 @@ input UserInput {
     password: String
     newPassword: String
     email: String
-    phoneNumber: Int
+    phoneNumber: String
+    maskedNumber: String
     whitelist: [Int]
     blacklist: [Int]
     verificationLevel: Int
+    subscriptionHistory: [SubscriptionInput]
+}
 
+input SubscriptionInput {
+    dateStart: Date
+    dateEnd: Date
+    amount: Float
+    transactionId: String
+    type: String
 }
 
 type Call {
     _id: ID
     date: Date
-    from: Int
+    callSid: String
+    from: String
     toUserId: ID
     action: String
 }
