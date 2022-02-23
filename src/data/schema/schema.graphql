@@ -15,17 +15,17 @@ type User {
     whitelist: [Int]
     blacklist: [Int]
     verificationLevel: Int
-    subscriptionHistory: [Subscription]
+    subscriptionHistory: [Payment]
     callHistory: [ID]
     notificationHistory: [ID]
 }
 
-type Subscription {
+type Payment {
     dateStart: Date
     dateEnd: Date
     amount: Float
     transactionId: String
-    type: String
+    plan: String
 }
 
 input NewUserInput {
@@ -48,20 +48,20 @@ input UserInput {
     whitelist: [Int]
     blacklist: [Int]
     verificationLevel: Int
-    subscriptionHistory: [SubscriptionInput]
+    subscriptionHistory: [PaymentInput]
 }
 
-input SubscriptionInput {
+input PaymentInput {
     dateStart: Date
     dateEnd: Date
     amount: Float
     transactionId: String
-    type: String
+    plan: String
 }
 
 type Call {
     _id: ID
-    date: Date
+    dateTime: Date
     callSid: String
     from: String
     toUserId: ID

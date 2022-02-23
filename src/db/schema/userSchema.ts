@@ -16,7 +16,7 @@ export const userSchema = new Schema({
         dateEnd: {type: Date},
         amount: Number,
         transactionId: String,
-        type: String
+        plan: String
     }],
     callHistory: [{type: Types.ObjectId, ref: 'Call'}],
     notificationHistory: [{type: Types.ObjectId, ref: 'Notification'}],
