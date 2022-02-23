@@ -1,6 +1,7 @@
 import { User } from '../../db';
 import mongoose from 'mongoose';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
+import { ObjectId } from 'mongodb';
 
 export const UserQueries = {
     getAllUsers: async () => {
@@ -12,15 +13,17 @@ export const UserQueries = {
         }
     },
     getUser: async (_: any, { id }: any) => {
-        try {
-            const user = await User.findOne({_id: id});
-            if (!user) {
-                throw new Error('User does ont exist');
-            }
-            return user;
-        } catch(error) {
-            throw error;
+
+        if (!ObjectId.isValid(id)) {
+            throw new Error('Invalid ID')
         }
+        
+        const user = await User.findOne({ _id: id });
+        if (!user) {
+            throw new Error('User does not exist');
+        }
+        return user;
+
     }
 };
 
