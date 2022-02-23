@@ -6,6 +6,7 @@ export const userSchema = new Schema({
     password: String,
     email: String,
     phoneNumber: Number,
+    maskedNumber: Number,
     dateJoined: { type: Date, default: Date.now() },
     whitelist: [Number],
     blacklist: [Number],

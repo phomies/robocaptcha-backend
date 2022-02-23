@@ -39,6 +39,7 @@ export const UserMutations = {
             name: userInput.name,
             password: hmacSHA256(userInput.password, process.env.HASH_KEY || '').toString(),
             phoneNumber: userInput.phoneNumber,
+            maskedNumber: userInput.maskedNumber,
             email: userInput.email,
             verificationLevel: userInput.verificationLevel
         });

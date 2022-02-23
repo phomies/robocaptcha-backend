@@ -10,6 +10,7 @@ type User {
     password: String
     email: String
     phoneNumber: Int
+    maskedNumber: Int
     dateJoined: Date
     whitelist: [Int]
     blacklist: [Int]
@@ -32,6 +33,7 @@ input NewUserInput {
     email: String!
     password: String!
     phoneNumber: Int!
+    maskedNumber: Int!
     verificationLevel: Int
 }
 
