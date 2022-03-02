@@ -16,6 +16,7 @@ const gateway = new ApolloGateway({
         subgraphs: [
             { name: 'users', url: getUrl(PORTS['USER']) },
             { name: 'payment', url: getUrl(PORTS['PAYMENT']) },
+            { name: 'call', url: getUrl(PORTS['CALL']) },
         ],
     }),
 });
