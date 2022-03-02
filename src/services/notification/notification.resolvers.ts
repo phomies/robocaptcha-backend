@@ -12,7 +12,7 @@ export const NotificationResolvers = {
             return notifs;
         },
     },
-    Mutatation: {
+    Mutation: {
         createNotification: async (_: any, { notificationInput }: any) => {
             const newNotif = new Notification({
                 _id: new mongoose.Types.ObjectId(),
