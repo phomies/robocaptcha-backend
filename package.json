@@ -5,7 +5,8 @@
     "private": true,
     "scripts": {
         "start": "concurrently -k npm:server:*",
-        "server:users": "nodemon ./src/services/users/index.ts",
+        "server:user": "nodemon ./src/services/user/index.ts",
+        "server:payment": "nodemon ./src/services/payment/index.ts",
         "server:graphql": "nodemon ./src/index.ts"
     },
     "dependencies": {

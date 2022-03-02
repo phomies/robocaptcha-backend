@@ -13,7 +13,10 @@ const getUrl = (port: number) => {
 
 const gateway = new ApolloGateway({
     supergraphSdl: new IntrospectAndCompose({
-        subgraphs: [{ name: 'users', url: getUrl(PORTS['USERS']) }],
+        subgraphs: [
+            { name: 'users', url: getUrl(PORTS['USER']) },
+            { name: 'payment', url: getUrl(PORTS['PAYMENT']) },
+        ],
     }),
 });
 
