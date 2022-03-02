@@ -35,7 +35,6 @@ const options = {
 };
 
 waitOn(options).then(() => {
-    initFirebase();
     server.listen(PORTS['ROOT']).then(({ url }) => {
         console.log(`Server is listening at ${url}`);
     });
