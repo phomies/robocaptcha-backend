@@ -4,6 +4,7 @@ import { ApolloGateway, IntrospectAndCompose } from '@apollo/gateway';
 import { ApolloServer } from 'apollo-server';
 import { PORTS } from './utils/ports';
 import waitOn from 'wait-on';
+import { ApolloServerPluginInlineTraceDisabled } from 'apollo-server-core';
 
 const getUrl = (port: number) => {
     const BASE_URL = process.env.URL || 'http://localhost:';
@@ -23,6 +24,7 @@ const gateway = new ApolloGateway({
 
 const server = new ApolloServer({
     gateway: gateway,
+    plugins: [ApolloServerPluginInlineTraceDisabled()],
 });
 
 const options = {
