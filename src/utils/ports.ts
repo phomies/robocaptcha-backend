@@ -1,7 +1,7 @@
 export const PORTS = {
-    ROOT: 5000,
-    USER: 5001,
-    PAYMENT: 5002,
-    CALL: 5003,
-    NOTIFICATION: 5004,
+    ROOT: 3001,
+    USER: 3002,
+    PAYMENT: 3003,
+    CALL: 3004,
+    NOTIFICATION: 3005,
 };
