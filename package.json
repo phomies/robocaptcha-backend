@@ -9,6 +9,7 @@
         "server:payment": "nodemon ./src/services/payment/index.ts",
         "server:call": "nodemon ./src/services/call/index.ts",
         "server:notification": "nodemon ./src/services/notification/index.ts",
+        "server:auth": "nodemon ./src/services/auth/index.ts",
         "server:graphql": "nodemon ./src/index.ts"
     },
     "dependencies": {
