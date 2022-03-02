@@ -18,6 +18,4 @@ export const userSchema = new Schema({
         transactionId: String,
         plan: String
     }],
-    callHistory: [{type: Types.ObjectId, ref: 'Call'}],
-    notificationHistory: [{type: Types.ObjectId, ref: 'Notification'}],
 });
