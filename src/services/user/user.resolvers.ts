@@ -36,4 +36,18 @@ export const UserResolvers = {
             return user;
         },
     },
+    Mutation: {
+        deleteUser: async (_: any, { id }: any) => {
+            const { deletedCount } = await User.deleteOne({ _id: id });
+            if (deletedCount === 0) {
+                throw new Error('User does not exist');
+            }
+        },
+        updateUser: async (_: any, { userInput }: any) => {
+            const { _id, ...userDetails } = userInput;
+            const user = await User.findByIdAndUpdate(_id, userDetails, { new: true });
+
+            return user;
+        },
+    },
 };

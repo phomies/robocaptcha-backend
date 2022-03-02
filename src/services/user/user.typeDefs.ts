@@ -1,4 +1,4 @@
-import { gql } from "apollo-server";
+import { gql } from 'apollo-server';
 
 export const UserTypeDefs = gql`
     scalar Date
@@ -16,12 +16,24 @@ export const UserTypeDefs = gql`
         verificationLevel: Int
     }
 
+    input UserInput {
+        _id: ID!
+        name: String
+        email: String
+        phoneNumber: String
+        maskedNumber: String
+        whitelist: [Int]
+        blacklist: [Int]
+        verificationLevel: Int
+    }
+
     extend type Query {
         getAllUsers: [User]
         getUser(id: ID): User
     }
 
     extend type Mutation {
+        updateUser(userInput: UserInput): User
         deleteUser(id: ID): Boolean
     }
 `;
