@@ -1,7 +1,7 @@
-import { Schema, Types } from 'mongoose';
+import { Schema } from 'mongoose';
 
 export const userSchema = new Schema({
-    id: String,
+    _id: String,
     name: String,
     email: String,
     phoneNumber: { type: String, default: '' },
@@ -9,6 +9,6 @@ export const userSchema = new Schema({
     dateJoined: { type: Date, default: Date.now() },
     whitelist: { type: [Number], default: [] },
     blacklist: { type: [Number], default: [] },
-    verificationLevel: { type: Number, min: 0, max: 3, required: true },
+    verificationLevel: { type: Number, min: 0, max: 3, default: 1 },
     permissions: { type: [String], default: ['GUEST'] },
 });
