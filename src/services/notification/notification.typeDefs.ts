@@ -19,12 +19,13 @@ export const NotificationTypeDefs = gql`
         dateTime: Date
     }
 
-    extend type Query {
-        getNotifsToUser(id: ID): [Notification]
+    extend type User @key(fields: "_id") {
+        _id: ID @external
+        notifications: [Notification]
     }
 
     extend type Mutation {
         createNotification(notificationInput: NewNotificationInput): Notification
-        readNotification(id: ID): Notification
+        readNotification(_id: ID): Notification
     }
 `;

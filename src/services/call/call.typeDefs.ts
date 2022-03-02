@@ -27,7 +27,7 @@ export const CallTypeDefs = gql`
     
     extend type Query {
         getAllCalls: [Call]
-        getCallsToUser(id: ID): [Call]
+        getCallsToUser(_id: ID): [Call]
     }
 
     extend type Mutation {

@@ -29,11 +29,11 @@ export const UserTypeDefs = gql`
 
     extend type Query {
         getAllUsers: [User]
-        getUser(id: ID): User
+        getUser(_id: ID): User
     }
 
     extend type Mutation {
         updateUser(userInput: UserInput): User
-        deleteUser(id: ID): Boolean
+        deleteUser(_id: ID): Boolean
     }
 `;

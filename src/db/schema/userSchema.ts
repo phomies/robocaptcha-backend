@@ -10,12 +10,6 @@ export const userSchema = new Schema({
     dateJoined: { type: Date, default: Date.now() },
     whitelist: [Number],
     blacklist: [Number],
-    verificationLevel: {type: Number, min: 0, max: 3, required: true},
-    subscriptionHistory: [{
-        dateStart: {type: Date},
-        dateEnd: {type: Date},
-        amount: Number,
-        transactionId: String,
-        plan: String
-    }],
+    verificationLevel: { type: Number, min: 0, max: 3, required: true },
+    permissions: { type: [String], default: ['GUEST'] },
 });

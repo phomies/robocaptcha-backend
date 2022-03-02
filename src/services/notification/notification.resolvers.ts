@@ -3,15 +3,13 @@ import mongoose from 'mongoose';
 import { Notification } from '../../db';
 
 export const NotificationResolvers = {
-    Query: {
-        getNotifsToUser: async (_: any, { id }: any) => {
-            if (!ObjectId.isValid(id)) {
-                throw new Error('Invalid ID');
-            }
-            const notifs = await Notification.find({ userId: id });
-            return notifs;
+    User: {
+        notifications: async (user: any) => {
+            const notifications = await Notification.find({ userId: user._id });
+            return notifications;
         },
     },
+    Query: {},
     Mutation: {
         createNotification: async (_: any, { notificationInput }: any) => {
             const newNotif = new Notification({
@@ -27,14 +25,13 @@ export const NotificationResolvers = {
 
             return savedNotif;
         },
-        readNotification: async (_: any, { id }: any) => {
-            if (!ObjectId.isValid(id)) {
+        readNotification: async (_: any, { _id }: any) => {
+            if (!ObjectId.isValid(_id)) {
                 throw new Error('Invalid ID');
             }
 
-            const notif = await Notification.findByIdAndUpdate(id, { read: true }, { new: true });
+            const notif = await Notification.findByIdAndUpdate(_id, { read: true }, { new: true });
             return notif;
         },
     },
-    Subscription: {},
 };

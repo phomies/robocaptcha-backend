@@ -10,11 +10,11 @@ export const CallResolvers = {
         },
     },
     Query: {
-        getCallsToUser: async (_: any, { id }: any) => {
-            if (!ObjectId.isValid(id)) {
+        getCallsToUser: async (_: any, { _id }: any) => {
+            if (!ObjectId.isValid(_id)) {
                 throw new Error('Invalid ID');
             }
-            const calls = await Call.find({ toUserId: id });
+            const calls = await Call.find({ toUserId: _id });
 
             return calls;
         },

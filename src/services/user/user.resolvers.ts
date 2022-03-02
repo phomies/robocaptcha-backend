@@ -4,11 +4,12 @@ import { ObjectId } from 'mongodb';
 export const UserResolvers = {
     User: {
         __resolveReference: async (ref: any) => {
-            if (!ObjectId.isValid(ref.id)) {
+            console.log(ref);
+            if (!ObjectId.isValid(ref._id)) {
                 throw new Error('Invalid ID');
             }
 
-            const user = await User.findOne({ _id: ref.id });
+            const user = await User.findById(ref._id);
             if (!user) {
                 throw new Error('User does not exist');
             }
@@ -17,19 +18,15 @@ export const UserResolvers = {
     },
     Query: {
         getAllUsers: async () => {
-            try {
-                const users = await User.find();
-                return users;
-            } catch (error) {
-                throw error;
-            }
+            const users = await User.find();
+            return users;
         },
-        getUser: async (_: any, { id }: any) => {
-            if (!ObjectId.isValid(id)) {
+        getUser: async (_: any, { _id }: any) => {
+            if (!ObjectId.isValid(_id)) {
                 throw new Error('Invalid ID');
             }
 
-            const user = await User.findOne({ _id: id });
+            const user = await User.findById(_id);
             if (!user) {
                 throw new Error('User does not exist');
             }

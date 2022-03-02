@@ -15,5 +15,6 @@ export const PaymentTypeDefs = gql`
 
     extend type User @key(fields: "_id") {
         _id: ID @external
+        payment: [Payment]
     }
 `;
