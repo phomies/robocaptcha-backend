@@ -8,11 +8,29 @@ export const CallTypeDefs = gql`
         dateTime: Date
         callSid: String
         from: String
-        toUserId: User
+        toUserId: ID
+        action: String
+    }
+
+    input NewCallInput {
+        dateTime: Date
+        callSid: String
+        from: String
+        toUserId: ID
         action: String
     }
 
     extend type User @key(fields: "_id") {
         _id: ID @external
+        calls: [Call]
+    }
+    
+    extend type Query {
+        getAllCalls: [Call]
+        getCallsToUser(id: ID): [Call]
+    }
+
+    extend type Mutation {
+        createCall(callInput: NewCallInput): Call
     }
 `;
