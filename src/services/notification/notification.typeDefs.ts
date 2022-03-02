@@ -5,7 +5,7 @@ export const NotificationTypeDefs = gql`
 
     type Notification @key(fields: "_id") {
         _id: ID
-        userId: ID
+        userId: String
         content: String
         read: Boolean
         url: String
@@ -13,14 +13,14 @@ export const NotificationTypeDefs = gql`
     }
 
     input NewNotificationInput {
-        userId: ID
+        userId: String
         content: String
         url: String
         dateTime: Date
     }
 
     extend type User @key(fields: "_id") {
-        _id: ID @external
+        _id: String @external
         notifications: [Notification]
     }
 

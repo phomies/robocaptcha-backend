@@ -8,7 +8,7 @@ export const CallTypeDefs = gql`
         dateTime: Date
         callSid: String
         from: String
-        toUserId: ID
+        toUserId: String
         action: String
     }
 
@@ -21,13 +21,12 @@ export const CallTypeDefs = gql`
     }
 
     extend type User @key(fields: "_id") {
-        _id: ID @external
+        _id: String @external
         calls: [Call]
     }
     
     extend type Query {
         getAllCalls: [Call]
-        getCallsToUser(_id: ID): [Call]
     }
 
     extend type Mutation {

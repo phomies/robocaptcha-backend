@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import { initFirebase } from './auth';
 import { ApolloGateway, IntrospectAndCompose } from '@apollo/gateway';
 import { ApolloServer } from 'apollo-server';
 import { PORTS } from './utils/ports';

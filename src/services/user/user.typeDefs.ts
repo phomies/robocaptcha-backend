@@ -4,7 +4,7 @@ export const UserTypeDefs = gql`
     scalar Date
 
     type User @key(fields: "_id") {
-        _id: ID
+        _id: String
         name: String
         password: String
         email: String
@@ -18,7 +18,7 @@ export const UserTypeDefs = gql`
     }
 
     input UserInput {
-        _id: ID!
+        _id: String!
         name: String
         email: String
         phoneNumber: String
@@ -30,12 +30,12 @@ export const UserTypeDefs = gql`
 
     extend type Query {
         getAllUsers: [User]
-        getUser(_id: ID): User
-        loginUser(_id: ID, token: String): String
+        getUser(_id: String): User
+        loginUser(token: String): String
     }
 
     extend type Mutation {
         updateUser(userInput: UserInput): User
-        deleteUser(_id: ID): Boolean
+        deleteUser(_id: String): Boolean
     }
 `;

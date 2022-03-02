@@ -5,7 +5,7 @@ export const PaymentTypeDefs = gql`
 
     type Payment @key(fields: "_id") {
         _id: ID
-        userId: ID
+        userId: String
         dateStart: Date
         dateEnd: Date
         amount: Float
@@ -14,7 +14,7 @@ export const PaymentTypeDefs = gql`
     }
 
     extend type User @key(fields: "_id") {
-        _id: ID @external
+        _id: String @external
         payments: [Payment]
     }
 `;

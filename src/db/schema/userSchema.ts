@@ -1,15 +1,14 @@
 import { Schema, Types } from 'mongoose';
 
 export const userSchema = new Schema({
-    id: Types.ObjectId,
+    id: String,
     name: String,
-    password: String,
     email: String,
-    phoneNumber: String,
-    maskedNumber: String,
+    phoneNumber: { type: String, default: '' },
+    maskedNumber: { type: String, default: '' },
     dateJoined: { type: Date, default: Date.now() },
-    whitelist: [Number],
-    blacklist: [Number],
+    whitelist: { type: [Number], default: [] },
+    blacklist: { type: [Number], default: [] },
     verificationLevel: { type: Number, min: 0, max: 3, required: true },
     permissions: { type: [String], default: ['GUEST'] },
 });
