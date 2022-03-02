@@ -1,4 +1,4 @@
-import { gql } from "apollo-server";
+import { gql } from 'apollo-server';
 
 export const PaymentTypeDefs = gql`
     scalar Date
@@ -15,6 +15,6 @@ export const PaymentTypeDefs = gql`
 
     extend type User @key(fields: "_id") {
         _id: ID @external
-        payment: [Payment]
+        payments: [Payment]
     }
 `;

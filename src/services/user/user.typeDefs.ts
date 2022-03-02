@@ -14,6 +14,7 @@ export const UserTypeDefs = gql`
         whitelist: [Int]
         blacklist: [Int]
         verificationLevel: Int
+        permissions: [String]
     }
 
     input UserInput {
@@ -30,6 +31,7 @@ export const UserTypeDefs = gql`
     extend type Query {
         getAllUsers: [User]
         getUser(_id: ID): User
+        loginUser(_id: ID, token: String): String
     }
 
     extend type Mutation {

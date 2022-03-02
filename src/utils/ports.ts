@@ -4,5 +4,4 @@ export const PORTS = {
     PAYMENT: 3003,
     CALL: 3004,
     NOTIFICATION: 3005,
-    AUTH: 3006,
 };

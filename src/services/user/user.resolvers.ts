@@ -1,5 +1,6 @@
 import { User } from '../../db';
 import { ObjectId } from 'mongodb';
+import * as firebase from 'firebase-admin';
 
 export const UserResolvers = {
     User: {
@@ -31,6 +32,18 @@ export const UserResolvers = {
                 throw new Error('User does not exist');
             }
             return user;
+        },
+        loginUser: async (_: any, { _id, token }: any) => {
+            try {
+                const user = await User.findById(_id);
+                const decodedToken = await firebase.auth().verifyIdToken(token);
+                console.log(decodedToken);
+                // if (!user) {
+                //     const newUser = new User({
+                //         _id: _id,
+                //     });
+                // }
+            } catch (error) {}
         },
     },
     Mutation: {
