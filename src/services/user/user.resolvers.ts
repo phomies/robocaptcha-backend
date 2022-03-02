@@ -43,7 +43,9 @@ export const UserResolvers = {
                 //         _id: _id,
                 //     });
                 // }
-            } catch (error) {}
+            } catch (error) {
+                console.log(error)
+            }
         },
     },
     Mutation: {

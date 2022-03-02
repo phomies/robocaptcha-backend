@@ -5,6 +5,7 @@ import { UserResolvers } from './user.resolvers';
 import { UserTypeDefs } from './user.typeDefs';
 import { PORTS } from '../../utils/ports';
 import { ApolloServerPluginInlineTraceDisabled } from 'apollo-server-core';
+import { initFirebase } from "../../auth";
 
 const server = new ApolloServer({
     schema: buildSubgraphSchema([{ resolvers: UserResolvers, typeDefs: UserTypeDefs }]),
@@ -12,5 +13,6 @@ const server = new ApolloServer({
 });
 
 server.listen(PORTS['USER']).then(({ url }) => {
+    initFirebase();
     console.log(`User service is ready at ${url}`);
 });
