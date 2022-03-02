@@ -8,6 +8,7 @@
         "server:user": "nodemon ./src/services/user/index.ts",
         "server:payment": "nodemon ./src/services/payment/index.ts",
         "server:call": "nodemon ./src/services/call/index.ts",
+        "server:notification": "nodemon ./src/services/notification/index.ts",
         "server:graphql": "nodemon ./src/index.ts"
     },
     "dependencies": {
@@ -26,6 +27,7 @@
         "firebase-admin": "^10.0.2",
         "graphql": "^15.8.0",
         "graphql-scalars": "^1.14.1",
+        "graphql-sqs-subscriptions": "^0.0.5",
         "http-errors": "~1.6.3",
         "mongodb": "^4.3.1",
         "mongoose": "^6.1.8",
