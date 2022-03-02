@@ -1,20 +1,12 @@
 import { User } from '../../db';
 import { ObjectId } from 'mongodb';
 import * as firebase from 'firebase-admin';
+import mongoose from 'mongoose';
 
 export const UserResolvers = {
     User: {
         __resolveReference: async (ref: any) => {
-            console.log(ref);
-            if (!ObjectId.isValid(ref._id)) {
-                throw new Error('Invalid ID');
-            }
-
-            const user = await User.findById(ref._id);
-            if (!user) {
-                throw new Error('User does not exist');
-            }
-            return user;
+            return await getUser(ref._id);
         },
     },
     Query: {
@@ -23,28 +15,31 @@ export const UserResolvers = {
             return users;
         },
         getUser: async (_: any, { _id }: any) => {
-            if (!ObjectId.isValid(_id)) {
-                throw new Error('Invalid ID');
-            }
-
-            const user = await User.findById(_id);
-            if (!user) {
-                throw new Error('User does not exist');
-            }
-            return user;
+            return await getUser(_id);
         },
-        loginUser: async (_: any, { _id, token }: any) => {
+        loginUser: async (_: any, { token }: any) => {
             try {
-                const user = await User.findById(_id);
                 const decodedToken = await firebase.auth().verifyIdToken(token);
-                console.log(decodedToken);
-                // if (!user) {
-                //     const newUser = new User({
-                //         _id: _id,
-                //     });
-                // }
+                const { uid, email, ...details } = decodedToken;
+                let user = await User.findOne({ _id: uid });
+
+                if (!user) {
+                    const newUser = new User({
+                        _id: uid,
+                        name: email?.substring(0, email.indexOf('@')), // Set username as email ID
+                        email: email,
+                    });
+
+                    await newUser.save();
+                    user = await User.findOne({ _id: uid }); // Retrieve updated details
+                }
+
+                return await firebase.auth().setCustomUserClaims(uid, { permissions: [...user.permissions] });
             } catch (error) {
-                console.log(error)
+                // if (error instanceof Error) {
+                //     throw new Error(error.message);
+                // }
+                console.log(error);
             }
         },
     },
@@ -62,4 +57,16 @@ export const UserResolvers = {
             return user;
         },
     },
+};
+
+const getUser = async (_id: string) => {
+    if (!ObjectId.isValid(_id)) {
+        throw new Error('Invalid ID');
+    }
+
+    const user = await User.findById(_id);
+    if (!user) {
+        throw new Error('User does not exist');
+    }
+    return user;
 };
