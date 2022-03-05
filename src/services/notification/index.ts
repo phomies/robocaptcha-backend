@@ -5,7 +5,6 @@ import { PORTS } from '../../utils/ports';
 import { NotificationResolvers } from './notification.resolvers';
 import { NotificationTypeDefs } from './notification.typeDefs';
 import { ApolloServerPluginInlineTraceDisabled } from 'apollo-server-core/dist/plugin/inlineTrace';
-import { initFirebase } from "../../auth";
 
 const server = new ApolloServer({
     schema: buildSubgraphSchema([{ resolvers: NotificationResolvers, typeDefs: NotificationTypeDefs }]),
@@ -13,6 +12,5 @@ const server = new ApolloServer({
 });
 
 server.listen(PORTS['NOTIFICATION']).then(({ url }) => {
-    initFirebase();
     console.log(`Notification service is ready at ${url}`);
 });

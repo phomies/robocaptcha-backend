@@ -5,7 +5,6 @@ import { PORTS } from '../../utils/ports';
 import { PaymentResolvers } from './payment.resolvers';
 import { PaymentTypeDefs } from './payment.typeDefs';
 import { ApolloServerPluginInlineTraceDisabled } from "apollo-server-core";
-import { initFirebase } from "../../auth";
 
 const server = new ApolloServer({
     schema: buildSubgraphSchema([{ resolvers: PaymentResolvers, typeDefs: PaymentTypeDefs }]),
@@ -13,6 +12,5 @@ const server = new ApolloServer({
 });
 
 server.listen(PORTS['PAYMENT']).then(({ url }) => {
-    initFirebase();
     console.log(`Payment service is ready at ${url}`);
 });

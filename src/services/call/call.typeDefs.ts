@@ -16,7 +16,7 @@ export const CallTypeDefs = gql`
         dateTime: Date
         callSid: String
         from: String
-        toUserId: ID
+        toUserId: String
         action: String
     }
 

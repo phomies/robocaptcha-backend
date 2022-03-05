@@ -5,6 +5,6 @@ export const callSchema = new Schema({
     dateTime: { type: Date, default: Date.now() },
     callSid: String,
     from: String,
-    toUserId: {type: Types.ObjectId, ref: 'User'},
+    toUserId: { type: String, ref: 'User' },
     action: String,
 });
