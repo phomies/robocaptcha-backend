@@ -60,10 +60,6 @@ export const UserResolvers = {
 };
 
 const getUser = async (_id: string) => {
-    if (!ObjectId.isValid(_id)) {
-        throw new Error('Invalid ID');
-    }
-
     const user = await User.findById(_id);
     if (!user) {
         throw new Error('User does not exist');

@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongodb';
 import mongoose from 'mongoose';
 import { Call } from '../../db';
 
@@ -10,14 +9,6 @@ export const CallResolvers = {
         },
     },
     Query: {
-        getCallsToUser: async (_: any, { _id }: any) => {
-            if (!ObjectId.isValid(_id)) {
-                throw new Error('Invalid ID');
-            }
-            const calls = await Call.find({ toUserId: _id });
-
-            return calls;
-        },
         getAllCalls: async () => {
             const calls = await Call.find();
             return calls;
