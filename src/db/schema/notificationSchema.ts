@@ -1,7 +1,7 @@
 import { Schema, Types } from 'mongoose';
 
 export const notificationSchema = new Schema({
-    id: Types.ObjectId,
+    _id: Types.ObjectId,
     userId: { type: String, ref: 'User' },
     content: String,
     read: Boolean,
