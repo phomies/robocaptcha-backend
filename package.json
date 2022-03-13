@@ -9,6 +9,7 @@
         "server:payment": "nodemon ./src/services/payment/index.ts",
         "server:call": "nodemon ./src/services/call/index.ts",
         "server:notification": "nodemon ./src/services/notification/index.ts",
+        "server:dummy": "nodemon ./src/services/dummy/index.ts",
         "server:graphql": "nodemon ./src/index.ts"
     },
     "dependencies": {
@@ -36,6 +37,7 @@
         "wait-on": "^6.0.1"
     },
     "devDependencies": {
+        "@faker-js/faker": "^6.0.0-beta.0",
         "@types/cookie-parser": "^1.4.2",
         "@types/http-errors": "^1.8.2",
         "@types/morgan": "^1.9.3",
