@@ -18,6 +18,7 @@ const gateway = new ApolloGateway({
             { name: 'payment', url: getUrl(PORTS['PAYMENT']) },
             { name: 'call', url: getUrl(PORTS['CALL']) },
             { name: 'notification', url: getUrl(PORTS['NOTIFICATION']) },
+            { name: 'dummy', url: getUrl(PORTS['DUMMY']) },
         ],
     }),
 });
