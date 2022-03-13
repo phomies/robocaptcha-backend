@@ -71,7 +71,7 @@ const getRandomNumber = (min: number, max: number) => {
 };
 
 const getRandomAction = () => {
-    const ACTIONS = ['success', 'progress', 'timeout'];
+    const ACTIONS = ['success', 'progress', 'timeout', 'blocked'];
 
     return ACTIONS[Math.floor(Math.random() * ACTIONS.length)];
 };

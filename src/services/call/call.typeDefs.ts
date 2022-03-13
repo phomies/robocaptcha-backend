@@ -12,6 +12,19 @@ export const CallTypeDefs = gql`
         action: String
     }
 
+    type ReceivedCall {
+        dateTime: Date
+        callsAccepted: Int
+        callsRejected: Int
+    }
+
+    type CallSummary {
+        callsReceived: [ReceivedCall]
+        weeklyBlockedCalls: Int
+        totalBlockedCalls: Int
+        newCalls: Int
+    }
+
     input NewCallInput {
         dateTime: Date
         callSid: String
@@ -27,6 +40,7 @@ export const CallTypeDefs = gql`
     
     extend type Query {
         getAllCalls: [Call]
+        getCallSummary(_id: String): CallSummary
     }
 
     extend type Mutation {
