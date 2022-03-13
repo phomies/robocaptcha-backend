@@ -19,6 +19,7 @@ const gateway = new ApolloGateway({
             { name: 'call', url: getUrl(PORTS['CALL']) },
             { name: 'notification', url: getUrl(PORTS['NOTIFICATION']) },
             { name: 'dummy', url: getUrl(PORTS['DUMMY']) },
+            { name: 'contact', url: getUrl(PORTS['CONTACT']) },
         ],
     }),
 });

@@ -5,4 +5,5 @@ export const PORTS = {
     CALL: 3004,
     NOTIFICATION: 3005,
     DUMMY: 3006,
+    CONTACT: 3007,
 };
