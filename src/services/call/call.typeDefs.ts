@@ -10,6 +10,7 @@ export const CallTypeDefs = gql`
         from: String
         toUserId: String
         action: String
+        location: String
     }
 
     type ReceivedCall {

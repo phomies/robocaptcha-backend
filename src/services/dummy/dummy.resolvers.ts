@@ -35,6 +35,7 @@ export const DummyResolvers = {
                     from: number,
                     toUserId: _id,
                     action: action,
+                    location: faker.address.country(),
                 });
                 await newCall.save();
 
