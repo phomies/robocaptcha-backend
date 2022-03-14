@@ -1,7 +1,5 @@
 import { User } from '../../db';
-import { ObjectId } from 'mongodb';
 import * as firebase from 'firebase-admin';
-import mongoose from 'mongoose';
 
 export const UserResolvers = {
     User: {
@@ -21,6 +19,7 @@ export const UserResolvers = {
             try {
                 const decodedToken = await firebase.auth().verifyIdToken(token);
                 const { uid, email, ...details } = decodedToken;
+                console.log(`${details.firebase.identities.displayName} Trying to login`);
                 let user = await User.findOne({ _id: uid });
 
                 if (!user) {

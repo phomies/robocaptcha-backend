@@ -10,6 +10,7 @@
         "server:call": "nodemon ./src/services/call/index.ts",
         "server:notification": "nodemon ./src/services/notification/index.ts",
         "server:dummy": "nodemon ./src/services/dummy/index.ts",
+        "server:contact": "nodemon ./src/services/contact/index.ts",
         "server:graphql": "nodemon ./src/index.ts"
     },
     "dependencies": {
@@ -20,6 +21,7 @@
         "@types/crypto-js": "^4.1.0",
         "apollo-server": "^3.6.3",
         "apollo-server-core": "^3.6.3",
+        "axios": "^0.26.1",
         "concurrently": "^7.0.0",
         "cookie-parser": "~1.4.4",
         "crypto-js": "^4.1.1",

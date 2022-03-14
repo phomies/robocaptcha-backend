@@ -9,6 +9,12 @@ import { ApolloServerPluginInlineTraceDisabled } from 'apollo-server-core/dist/p
 const server = new ApolloServer({
     schema: buildSubgraphSchema([{ resolvers: ContactResolvers, typeDefs: ContactTypeDefs }]),
     plugins: [ApolloServerPluginInlineTraceDisabled()],
+    context: ({ req }) => {
+        const uid = req.headers.uid || '';
+        const gapiToken = req.headers.gapitoken || '';
+
+        return { uid, gapiToken };
+    },
 });
 
 server.listen(PORTS['CONTACT']).then(({ url }) => {
