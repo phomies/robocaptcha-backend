@@ -10,6 +10,7 @@
         "server:call": "nodemon ./src/services/call/index.ts",
         "server:notification": "nodemon ./src/services/notification/index.ts",
         "server:dummy": "nodemon ./src/services/dummy/index.ts",
+        "server:contact": "nodemon ./src/services/contact/index.ts",
         "server:graphql": "nodemon ./src/index.ts"
     },
     "dependencies": {
