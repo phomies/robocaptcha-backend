@@ -4,6 +4,8 @@ import { ApolloServer } from 'apollo-server';
 import { PORTS } from './utils/ports';
 import waitOn from 'wait-on';
 import { ApolloServerPluginInlineTraceDisabled } from 'apollo-server-core';
+import { initFirebase } from './auth';
+import * as firebase from 'firebase-admin';
 
 const getUrl = (port: number) => {
     const BASE_URL = process.env.URL || 'http://localhost:';
@@ -27,7 +29,9 @@ const gateway = new ApolloGateway({
             url,
             willSendRequest({ request, context }: any) {
                 // Forward token to subgraphs as headers
-                request.http.headers.set('authorization', context.token);
+                request.http.headers.set('fbToken', context.fbToken);
+                request.http.headers.set('gapiToken', context.gapiToken);
+                request.http.headers.set('uid', context.uid);
             },
         });
     },
@@ -36,10 +40,26 @@ const gateway = new ApolloGateway({
 const server = new ApolloServer({
     gateway: gateway,
     plugins: [ApolloServerPluginInlineTraceDisabled()],
-    context: ({ req }) => {
-        const token = req.headers.authorization || '';
+    context: async ({ req }) => {
+        const fbToken = req.headers.fbtoken || '';
+        const gapiToken = req.headers.gapitoken || '';
 
-        return { token };
+        try {
+            const decodedToken = await firebase.auth().verifyIdToken(String(fbToken));
+            const { uid, email, ...details } = decodedToken;
+
+            return { uid, fbToken, gapiToken };
+        } catch (error) {
+            const code = (error as any).code;
+
+            if (code === 'auth/id-token-revoked') {
+                console.log('Expired access token');
+            } else if (code === 'auth/argument-error') {
+                console.log('Invalid access token');
+            } else {
+                console.log(JSON.stringify(error));
+            }
+        }
     },
 });
 
@@ -50,6 +70,7 @@ const options = {
 };
 
 waitOn(options).then(() => {
+    initFirebase();
     server.listen(PORTS['ROOT']).then(({ url }) => {
         console.log(`Server is listening at ${url}`);
     });

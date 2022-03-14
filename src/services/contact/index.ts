@@ -10,9 +10,10 @@ const server = new ApolloServer({
     schema: buildSubgraphSchema([{ resolvers: ContactResolvers, typeDefs: ContactTypeDefs }]),
     plugins: [ApolloServerPluginInlineTraceDisabled()],
     context: ({ req }) => {
-        const token = req.headers.authorization || '';
+        const uid = req.headers.uid || '';
+        const gapiToken = req.headers.gapitoken || '';
 
-        return { token };
+        return { uid, gapiToken };
     },
 });
 

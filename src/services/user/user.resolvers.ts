@@ -17,9 +17,9 @@ export const UserResolvers = {
         },
         loginUser: async (_: any, { token }: any) => {
             try {
-                console.log(`${token} Trying to login`);
                 const decodedToken = await firebase.auth().verifyIdToken(token);
                 const { uid, email, ...details } = decodedToken;
+                console.log(`${details.firebase.identities.displayName} Trying to login`);
                 let user = await User.findOne({ _id: uid });
 
                 if (!user) {
