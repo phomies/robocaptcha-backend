@@ -10,5 +10,6 @@ export const ContactTypeDefs = gql`
 
     extend type Query {
         getContacts: [Contact]
+        syncContacts: Boolean
     }
 `;
