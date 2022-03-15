@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IContext } from "../../common/interface";
+import { IContext } from '../../common/interface';
 import { Contact } from '../../db';
 import { Connection } from './contact.interface';
 
@@ -32,7 +32,17 @@ export const ContactResolvers = {
             }
         },
     },
-    Mutation: {},
+    Mutation: {
+        updateContact: async (_: any, { contactInput }: any, context: IContext) => {
+            const { _id, ...contactDetails } = contactInput;
+            const userId = context.uid;
+            console.log({ _id: _id, userId: userId });
+
+            const contact = await Contact.findOneAndUpdate({ _id: _id, userId: userId }, contactDetails, { new: true });
+
+            return contact;
+        },
+    },
 };
 
 const getGoogleContacts = async (token: string, pageToken?: string) => {
