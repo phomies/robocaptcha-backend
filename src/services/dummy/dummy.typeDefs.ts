@@ -3,13 +3,14 @@ import { gql } from 'apollo-server';
 export const DummyTypeDefs = gql`
     scalar Date
 
-    type DocumentDelete {
+    type DocumentSummary {
         calls: Int
         notifications: Int
+        contacts: Int
     }
 
     extend type Mutation {
-        createDummyData(_id: String): Boolean
-        deleteDummyData(_id: String): DocumentDelete
+        createDummyData(_id: String): DocumentSummary
+        deleteDummyData(_id: String): DocumentSummary
     }
 `;

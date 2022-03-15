@@ -53,11 +53,9 @@ const server = new ApolloServer({
             const code = (error as any).code;
 
             if (code === 'auth/id-token-revoked') {
-                console.log('Expired access token');
-            } else if (code === 'auth/argument-error') {
-                console.log('Invalid access token');
-            } else {
-                console.log(JSON.stringify(error));
+                console.log('Revoked firebase access token');
+            } else if (code === 'auth/id-token-expired') {
+                console.log('Expired firebase access token');
             }
         }
     },
