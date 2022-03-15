@@ -6,7 +6,8 @@ export const contactSchema = new Schema(
         number: String,
         name: String,
         userId: { type: String, ref: 'User' },
-        isBlocked: { type: Boolean, default: false },
+        isBlacklisted: { type: Boolean, default: false },
+        isWhitelisted: { type: Boolean, default: false },
     },
     { timestamps: true }
 );
