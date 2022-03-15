@@ -7,9 +7,19 @@ export const ContactTypeDefs = gql`
         _id: ID
         name: String
         number: String
-        isBlocked: Boolean
+        isWhitelisted: Boolean
+        isBlacklisted: Boolean
+        userId: String
         createdAt: Date
         updatedAt: Date
+    }
+
+    input ContactInput {
+        _id: ID!
+        name: String
+        number: String
+        isWhitelisted: Boolean
+        isBlacklisted: Boolean
     }
 
     extend type User @key(fields: "_id") {
@@ -19,5 +29,9 @@ export const ContactTypeDefs = gql`
 
     extend type Query {
         syncContacts: Boolean
+    }
+
+    extend type Mutation {
+        updateContact(contactInput: ContactInput): Contact
     }
 `;
