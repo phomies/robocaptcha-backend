@@ -11,8 +11,6 @@ export const UserTypeDefs = gql`
         phoneNumber: String
         maskedNumber: String
         dateJoined: Date
-        whitelist: [Int]
-        blacklist: [Int]
         verificationLevel: Int
         permissions: [String]
     }
