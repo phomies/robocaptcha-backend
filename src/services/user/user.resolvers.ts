@@ -1,5 +1,6 @@
 import { User } from '../../db';
 import * as firebase from 'firebase-admin';
+import { IContext } from "../../common/interface";
 
 export const UserResolvers = {
     User: {
@@ -12,8 +13,9 @@ export const UserResolvers = {
             const users = await User.find();
             return users;
         },
-        getUser: async (_: any, { _id }: any) => {
-            return await getUser(_id);
+        getUser: async (_: any, __: any, context: IContext) => {
+            console.log(context)
+            return await getUser(context.uid);
         },
         loginUser: async (_: any, { token }: any) => {
             try {

@@ -43,10 +43,14 @@ const server = new ApolloServer({
     context: async ({ req }) => {
         const fbToken = req.headers.fbtoken || '';
         const gapiToken = req.headers.gapitoken || '';
+        let uid = '';
 
         try {
-            const decodedToken = await firebase.auth().verifyIdToken(String(fbToken));
-            const { uid, email, ...details } = decodedToken;
+            if (fbToken) {
+                const decodedToken = await firebase.auth().verifyIdToken(String(fbToken));
+                const { uid: uuid, email, ...details } = decodedToken;
+                uid = uuid;
+            }
 
             return { uid, fbToken, gapiToken };
         } catch (error) {

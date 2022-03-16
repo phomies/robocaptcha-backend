@@ -10,6 +10,12 @@ import { initFirebase } from "../../auth";
 const server = new ApolloServer({
     schema: buildSubgraphSchema([{ resolvers: UserResolvers, typeDefs: UserTypeDefs }]),
     plugins: [ApolloServerPluginInlineTraceDisabled()],
+    context: ({ req }) => {
+        const uid = req.headers.uid || '';
+        const gapiToken = req.headers.gapitoken || '';
+
+        return { uid, gapiToken };
+    },
 });
 
 server.listen(PORTS['USER']).then(({ url }) => {

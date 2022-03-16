@@ -28,7 +28,7 @@ export const UserTypeDefs = gql`
 
     extend type Query {
         getAllUsers: [User]
-        getUser(_id: String): User
+        getUser: User
         loginUser(token: String): String
     }
 
