@@ -1,6 +1,6 @@
 import { User } from '../../db';
 import * as firebase from 'firebase-admin';
-import { IContext } from "../../common/interface";
+import { IContext } from '../../common/interface';
 
 export const UserResolvers = {
     User: {
@@ -14,11 +14,17 @@ export const UserResolvers = {
             return users;
         },
         getUser: async (_: any, __: any, context: IContext) => {
-            console.log(context)
+            console.log(context);
             return await getUser(context.uid);
         },
-        loginUser: async (_: any, { token }: any) => {
+        loginUser: async (_: any, __: any, context: IContext) => {
             try {
+                const token = context.fbToken;
+
+                if (!token) {
+                    return;
+                }
+
                 const decodedToken = await firebase.auth().verifyIdToken(token);
                 const { uid, email, ...details } = decodedToken;
                 console.log(`${details.firebase.identities.displayName} Trying to login`);
