@@ -13,8 +13,9 @@ const server = new ApolloServer({
     context: ({ req }) => {
         const uid = req.headers.uid || '';
         const gapiToken = req.headers.gapitoken || '';
+        const fbToken = req.headers.fbtoken || '';
 
-        return { uid, gapiToken };
+        return { uid, fbToken, gapiToken };
     },
 });
 

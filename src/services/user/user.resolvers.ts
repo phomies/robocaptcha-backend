@@ -57,11 +57,8 @@ export const UserResolvers = {
                 throw new Error('User does not exist');
             }
         },
-        updateUser: async (_: any, { userInput }: any) => {
-            const { _id, ...userDetails } = userInput;
-            const user = await User.findByIdAndUpdate(_id, userDetails, { new: true });
-
-            return user;
+        updateUser: async (_: any, { userInput }: any, context: IContext) => {
+            return await User.findByIdAndUpdate(context.uid, userInput, { new: true });
         },
     },
 };
