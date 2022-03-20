@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import moment from 'moment';
 import { Call } from '../../db';
-import { IContext } from "../../common/interface";
+import { IContext } from '../../common/interface';
 
 type Value = {
     callsAccepted: number;
@@ -24,9 +24,11 @@ export const CallResolvers = {
             const calls = await Call.find({ toUserId: context.uid });
 
             const oneWeekBefore = moment().subtract(7, 'days');
+            const twoWeeksBefore = moment().subtract(14, 'days');
             const totalBlockedCalls = calls.filter((call) => call.action === 'blocked').length;
             const callsReceivedByDate = new Map<string, Value>();
             let newCalls = 0;
+            let totalCalls = 0;
             let weeklyBlockedCalls = 0;
 
             for (const call of calls) {
@@ -51,6 +53,10 @@ export const CallResolvers = {
                     }
                 }
 
+                if (moment(call.datetime).isAfter(twoWeeksBefore)) {
+                    totalCalls++;
+                }
+
                 if (moment(call.dateTime).isAfter(oneWeekBefore)) {
                     newCalls++;
 
@@ -60,6 +66,9 @@ export const CallResolvers = {
                 }
             }
 
+            // Total calls includes calls that are one week before
+            const oldCalls = totalCalls - newCalls;
+            const newCallsPercentage = Math.round(((newCalls - oldCalls) / oldCalls) * 100).toLocaleString() + '%';
             const callsReceived: any = [];
             callsReceivedByDate.forEach((value, key) => {
                 callsReceived.push({
@@ -69,7 +78,7 @@ export const CallResolvers = {
                 });
             });
 
-            return { callsReceived, weeklyBlockedCalls, totalBlockedCalls, newCalls };
+            return { callsReceived, weeklyBlockedCalls, totalBlockedCalls, newCalls, newCallsPercentage };
         },
     },
     Mutation: {

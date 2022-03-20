@@ -24,6 +24,7 @@ export const CallTypeDefs = gql`
         weeklyBlockedCalls: Int
         totalBlockedCalls: Int
         newCalls: Int
+        newCallsPercentage: String
     }
 
     input NewCallInput {
