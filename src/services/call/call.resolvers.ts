@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import moment from 'moment';
 import { Call } from '../../db';
+import { IContext } from "../../common/interface";
 
 type Value = {
     callsAccepted: number;
@@ -19,8 +20,8 @@ export const CallResolvers = {
             const calls = await Call.find();
             return calls;
         },
-        getCallSummary: async (_: any, { _id }: any) => {
-            const calls = await Call.find({ toUserId: _id });
+        getCallSummary: async (_: any, __: any, context: IContext) => {
+            const calls = await Call.find({ toUserId: context.uid });
 
             const oneWeekBefore = moment().subtract(7, 'days');
             const totalBlockedCalls = calls.filter((call) => call.action === 'blocked').length;

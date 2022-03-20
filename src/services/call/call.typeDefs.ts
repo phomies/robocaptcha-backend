@@ -41,7 +41,7 @@ export const CallTypeDefs = gql`
     
     extend type Query {
         getAllCalls: [Call]
-        getCallSummary(_id: String): CallSummary
+        getCallSummary: CallSummary
     }
 
     extend type Mutation {

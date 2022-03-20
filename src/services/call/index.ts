@@ -9,6 +9,11 @@ import { ApolloServerPluginInlineTraceDisabled } from 'apollo-server-core/dist/p
 const server = new ApolloServer({
     schema: buildSubgraphSchema([{ resolvers: CallResolvers, typeDefs: CallTypeDefs }]),
     plugins: [ApolloServerPluginInlineTraceDisabled()],
+    context: ({ req }) => {
+        const uid = req.headers.uid || '';
+
+        return { uid };
+    },
 });
 
 server.listen(PORTS['CALL']).then(({ url }) => {
