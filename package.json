@@ -4,25 +4,47 @@
     "description": "",
     "private": true,
     "scripts": {
-        "start": "nodemon",
-        "start:prod": "npm run build && node ./dist/src/server.js"
+        "start": "concurrently -k npm:server:*",
+        "server:user": "nodemon ./src/services/user/index.ts",
+        "server:payment": "nodemon ./src/services/payment/index.ts",
+        "server:call": "nodemon ./src/services/call/index.ts",
+        "server:notification": "nodemon ./src/services/notification/index.ts",
+        "server:dummy": "nodemon ./src/services/dummy/index.ts",
+        "server:contact": "nodemon ./src/services/contact/index.ts",
+        "server:graphql": "nodemon ./src/index.ts"
     },
     "dependencies": {
-        "apollo-server-express": "^3.6.2",
+        "@apollo/federation": "^0.35.1",
+        "@apollo/gateway": "^0.48.1",
+        "@graphql-tools/schema": "^8.3.2",
+        "@graphql-tools/utils": "^8.6.2",
+        "@types/crypto-js": "^4.1.0",
+        "apollo-server": "^3.6.3",
+        "apollo-server-core": "^3.6.3",
+        "axios": "^0.26.1",
+        "concurrently": "^7.0.0",
         "cookie-parser": "~1.4.4",
+        "crypto-js": "^4.1.1",
         "debug": "~2.6.9",
-        "express": "~4.17.2",
-        "graphql": "^16.3.0",
+        "dotenv": "^15.0.0",
+        "firebase-admin": "^10.0.2",
+        "graphql": "^15.8.0",
+        "graphql-scalars": "^1.14.1",
+        "graphql-sqs-subscriptions": "^0.0.5",
         "http-errors": "~1.6.3",
+        "moment": "^2.29.1",
         "mongodb": "^4.3.1",
         "mongoose": "^6.1.8",
-        "morgan": "~1.9.1"
+        "morgan": "~1.9.1",
+        "ts-node": "^10.6.0",
+        "wait-on": "^6.0.1"
     },
     "devDependencies": {
+        "@faker-js/faker": "^6.0.0-beta.0",
         "@types/cookie-parser": "^1.4.2",
-        "@types/express": "^4.17.13",
         "@types/http-errors": "^1.8.2",
         "@types/morgan": "^1.9.3",
+        "@types/wait-on": "^5.3.1",
         "@typescript-eslint/eslint-plugin": "^5.10.1",
         "@typescript-eslint/parser": "^5.10.1",
         "eslint": "^8.7.0",
@@ -30,7 +52,6 @@
         "eslint-plugin-prettier": "^4.0.0",
         "nodemon": "^2.0.15",
         "prettier": "^2.5.1",
-        "ts-node": "^10.4.0",
         "typescript": "^4.5.5"
     }
 }
