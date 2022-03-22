@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  callcaptcha-backend:
+    build: .
+    image: callcaptcha-backend
+    ports:
+      - "5001:3000"
