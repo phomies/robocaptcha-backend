@@ -14,7 +14,6 @@ export const UserResolvers = {
             return users;
         },
         getUser: async (_: any, __: any, context: IContext) => {
-            console.log(context);
             return await getUser(context.uid);
         },
         loginUser: async (_: any, __: any, context: IContext) => {
@@ -27,7 +26,6 @@ export const UserResolvers = {
 
                 const decodedToken = await firebase.auth().verifyIdToken(token);
                 const { uid, email, ...details } = decodedToken;
-                console.log(`${details.firebase.identities.displayName} Trying to login`);
                 let user = await User.findOne({ _id: uid });
 
                 if (!user) {

@@ -36,7 +36,6 @@ export const ContactResolvers = {
         updateContact: async (_: any, { contactInput }: any, context: IContext) => {
             const { _id, ...contactDetails } = contactInput;
             const userId = context.uid;
-            console.log({ _id: _id, userId: userId });
 
             const contact = await Contact.findOneAndUpdate({ _id: _id, userId: userId }, contactDetails, { new: true });
 

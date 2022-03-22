@@ -12,7 +12,15 @@ export const CallResolvers = {
     User: {
         calls: async (user: any) => {
             const calls = await Call.find({ toUserId: user._id });
-            return calls;
+
+            return calls.sort((a, b) => {
+                const diff = a.dateTime - b.dateTime;
+
+                if (diff == 0) {
+                    return a.location.localeCompare(b.location);
+                }
+                return diff;
+            });
         },
     },
     Query: {
