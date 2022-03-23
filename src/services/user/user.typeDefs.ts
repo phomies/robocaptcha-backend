@@ -20,8 +20,6 @@ export const UserTypeDefs = gql`
         email: String
         phoneNumber: String
         maskedNumber: String
-        whitelist: [Int]
-        blacklist: [Int]
         verificationLevel: Int
     }
 
