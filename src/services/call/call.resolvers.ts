@@ -25,10 +25,6 @@ export const CallResolvers = {
         },
     },
     Query: {
-        getAllCalls: async () => {
-            const calls = await Call.find();
-            return calls;
-        },
         getCallSummary: async (_: any, __: any, context: IContext) => {
             const calls = await Call.find({ toUserId: context.uid });
 

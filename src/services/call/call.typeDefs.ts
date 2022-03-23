@@ -41,7 +41,6 @@ export const CallTypeDefs = gql`
     }
     
     extend type Query {
-        getAllCalls: [Call]
         getCallSummary: CallSummary
     }
 
