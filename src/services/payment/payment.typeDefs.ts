@@ -13,8 +13,20 @@ export const PaymentTypeDefs = gql`
         plan: String
     }
 
+    input UpsertPaymentInput {
+        dateStart: Date
+        dateEnd: Date!
+        amount: Float!
+        transactionId: String!
+        plan: String!
+    }
+
     extend type User @key(fields: "_id") {
         _id: String @external
         payments: [Payment]
+    }
+
+    extend type Mutation {
+        upsertPayment(upsertPaymentInput: UpsertPaymentInput): Payment
     }
 `;
