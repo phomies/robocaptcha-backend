@@ -1,5 +1,5 @@
 import axios from 'axios';
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 import { IContext } from '../../common/interface';
 import { Contact } from '../../db';
 import { Connection } from './contact.interface';
@@ -34,28 +34,17 @@ export const ContactResolvers = {
         },
     },
     Mutation: {
-        updateContact: async (_: any, { updateContactInput }: any, context: IContext) => {
-            const { _id, ...contactDetails } = updateContactInput;
+        upsertContact: async (_: any, { upsertContactInput }: any, context: IContext) => {
+            const { number, ...contactDetails } = upsertContactInput;
             const userId = context.uid;
 
-            const contact = await Contact.findOneAndUpdate({ _id: _id, userId: userId }, contactDetails, { new: true });
+            const contact = await Contact.findOneAndUpdate({ number: number, userId: userId }, contactDetails, {
+                new: true,
+                upsert: true,
+            });
 
             return contact;
-        },
-        createContact: async (_: any, { createContactInput }: any, context: IContext) => {
-            const userId = context.uid;
-
-            const contact = new Contact({
-                _id: new mongoose.Types.ObjectId(),
-                name: createContactInput.name ? createContactInput.name : "",
-                number: createContactInput.number,
-                userId: userId,
-                isWhitelisted: createContactInput.isWhitelisted ? createContactInput.isWhitelisted : false,
-                isBlacklisted: createContactInput.isBlacklisted ? createContactInput.isBlacklisted : false,
-            })  
-            
-            await contact.save();
-        },
+        }
     },
 };
 

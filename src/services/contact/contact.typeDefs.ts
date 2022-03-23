@@ -14,17 +14,9 @@ export const ContactTypeDefs = gql`
         updatedAt: Date
     }
 
-    input CreateContactInput {
+    input UpsertContactInput {
+        number: String!
         name: String
-        number: String
-        isWhitelisted: Boolean
-        isBlacklisted: Boolean
-    }
-
-    input UpdateContactInput {
-        _id: ID!
-        name: String
-        number: String
         isWhitelisted: Boolean
         isBlacklisted: Boolean
     }
@@ -39,7 +31,6 @@ export const ContactTypeDefs = gql`
     }
 
     extend type Mutation {
-        createContact(createContactInput: CreateContactInput): Boolean
-        updateContact(updateContactInput: UpdateContactInput): Contact
+        upsertContact(upsertContactInput: UpsertContactInput): Contact
     }
 `;
