@@ -41,10 +41,7 @@ export const UserResolvers = {
 
                 return await firebase.auth().setCustomUserClaims(uid, { permissions: [...user.permissions] });
             } catch (error) {
-                // if (error instanceof Error) {
-                //     throw new Error(error.message);
-                // }
-                console.log(error);
+                console.log("Invalid token")
             }
         },
     },
