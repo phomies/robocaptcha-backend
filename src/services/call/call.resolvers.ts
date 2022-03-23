@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import moment from 'moment';
 import { Call } from '../../db';
 import { IContext } from '../../common/interface';
+import { CallReceive } from './call.interface';
 
 type Value = {
     callsAccepted: number;
@@ -31,10 +32,19 @@ export const CallResolvers = {
         getCallSummary: async (_: any, __: any, context: IContext) => {
             const calls = await Call.find({ toUserId: context.uid });
 
-            const oneWeekBefore = moment().subtract(7, 'days');
-            const twoWeeksBefore = moment().subtract(14, 'days');
+            const oneWeekBefore = moment().subtract(6, 'days');
+            const twoWeeksBefore = moment().subtract(13, 'days');
             const totalBlockedCalls = calls.filter((call) => call.action === 'blocked').length;
             const callsReceivedByDate = new Map<string, Value>();
+
+            let tempDate = oneWeekBefore;
+            for (let i = 0; i < 7; i++) {
+                callsReceivedByDate.set(tempDate.format('DD/MM/YYYY'), {
+                    callsAccepted: 0,
+                    callsRejected: 0,
+                });
+                tempDate = tempDate.add(1, 'days');
+            }
             let newCalls = 0;
             let totalCalls = 0;
             let weeklyBlockedCalls = 0;
@@ -43,22 +53,13 @@ export const CallResolvers = {
                 const date = moment(call.dateTime).format('DD/MM/YYYY');
                 const isCallAccepted = call.action === 'success';
 
-                if (!callsReceivedByDate.has(date)) {
-                    callsReceivedByDate.set(date, {
-                        callsAccepted: isCallAccepted ? 1 : 0,
-                        callsRejected: isCallAccepted ? 0 : 1,
-                    });
-                } else {
-                    const callData = callsReceivedByDate.get(date);
+                const callData = callsReceivedByDate.get(date);
 
-                    if (callData) {
-                        isCallAccepted && callData['callsAccepted']++;
-                        !isCallAccepted && callData['callsRejected']++;
+                if (callData) {
+                    isCallAccepted && callData['callsAccepted']++;
+                    !isCallAccepted && callData['callsRejected']++;
 
-                        callsReceivedByDate.set(date, callData);
-                    } else {
-                        throw new Error('Something went wrong with generating call summary');
-                    }
+                    callsReceivedByDate.set(date, callData);
                 }
 
                 if (moment(call.datetime).isAfter(twoWeeksBefore)) {
@@ -76,8 +77,9 @@ export const CallResolvers = {
 
             // Total calls includes calls that are one week before
             const oldCalls = totalCalls - newCalls;
-            const newCallsPercentage = Math.round(((newCalls - oldCalls) / oldCalls) * 100).toLocaleString() + '%';
-            const callsReceived: any = [];
+            const rawNewCallsPercentage = Math.round(((newCalls - oldCalls) / oldCalls) * 100);
+            const newCallsPercentage = `${rawNewCallsPercentage < 0 ? rawNewCallsPercentage : '+' + rawNewCallsPercentage}%`;
+            const callsReceived: CallReceive[] = [];
             callsReceivedByDate.forEach((value, key) => {
                 callsReceived.push({
                     dateTime: key,
@@ -86,6 +88,7 @@ export const CallResolvers = {
                 });
             });
 
+            callsReceived.sort((a, b) => a.dateTime.localeCompare(b.dateTime));
             return { callsReceived, weeklyBlockedCalls, totalBlockedCalls, newCalls, newCallsPercentage };
         },
     },
