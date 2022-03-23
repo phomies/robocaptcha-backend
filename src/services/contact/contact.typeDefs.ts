@@ -14,7 +14,14 @@ export const ContactTypeDefs = gql`
         updatedAt: Date
     }
 
-    input ContactInput {
+    input CreateContactInput {
+        name: String
+        number: String
+        isWhitelisted: Boolean
+        isBlacklisted: Boolean
+    }
+
+    input UpdateContactInput {
         _id: ID!
         name: String
         number: String
@@ -32,6 +39,7 @@ export const ContactTypeDefs = gql`
     }
 
     extend type Mutation {
-        updateContact(contactInput: ContactInput): Contact
+        createContact(createContactInput: CreateContactInput): Boolean
+        updateContact(updateContactInput: UpdateContactInput): Contact
     }
 `;
