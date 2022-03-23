@@ -1,5 +1,4 @@
 import axios from 'axios';
-import mongoose from 'mongoose';
 import { IContext } from '../../common/interface';
 import { Contact } from '../../db';
 import { Connection } from './contact.interface';
@@ -37,6 +36,7 @@ export const ContactResolvers = {
         upsertContact: async (_: any, { upsertContactInput }: any, context: IContext) => {
             const { number, ...contactDetails } = upsertContactInput;
             const userId = context.uid;
+            Object.assign(contactDetails, { userId: userId });
 
             const contact = await Contact.findOneAndUpdate({ number: number, userId: userId }, contactDetails, {
                 new: true,
@@ -44,7 +44,7 @@ export const ContactResolvers = {
             });
 
             return contact;
-        }
+        },
     },
 };
 
