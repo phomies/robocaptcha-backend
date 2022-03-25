@@ -26,7 +26,7 @@ export const UserTypeDefs = gql`
     extend type Query {
         getAllUsers: [User]
         getUser: User
-        loginUser(token: String): String
+        loginUser: String
     }
 
     extend type Mutation {

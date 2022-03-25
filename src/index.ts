@@ -48,7 +48,7 @@ const server = new ApolloServer({
         try {
             if (fbToken) {
                 const decodedToken = await firebase.auth().verifyIdToken(String(fbToken));
-                const { uid: uuid, email, ...details } = decodedToken;
+                const { uid: uuid, ...details } = decodedToken;
                 uid = uuid;
             }
 

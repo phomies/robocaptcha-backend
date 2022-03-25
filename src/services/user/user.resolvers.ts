@@ -19,7 +19,6 @@ export const UserResolvers = {
         loginUser: async (_: any, __: any, context: IContext) => {
             try {
                 const token = context.fbToken;
-
                 if (!token) {
                     return;
                 }
@@ -41,13 +40,13 @@ export const UserResolvers = {
 
                 return await firebase.auth().setCustomUserClaims(uid, { permissions: [...user.permissions] });
             } catch (error) {
-                console.log("Invalid token")
+                console.log('Invalid token');
             }
         },
     },
     Mutation: {
-        deleteUser: async (_: any, { id }: any) => {
-            const { deletedCount } = await User.deleteOne({ _id: id });
+        deleteUser: async (_: any, __: any, context: IContext) => {
+            const { deletedCount } = await User.deleteOne({ _id: context.uid });
             if (deletedCount === 0) {
                 throw new Error('User does not exist');
             }
