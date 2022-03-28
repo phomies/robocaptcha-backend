@@ -23,6 +23,12 @@ export const UserTypeDefs = gql`
         verificationLevel: Int
     }
 
+    input CreateUserInput {
+        name: String!
+        email: String!
+        phoneNumber: String!
+    }
+
     extend type Query {
         getAllUsers: [User]
         getUser: User
@@ -32,5 +38,6 @@ export const UserTypeDefs = gql`
     extend type Mutation {
         updateUser(userInput: UserInput): User
         deleteUser: Boolean
+        createUser(createUserInput: CreateUserInput): Boolean
     }
 `;

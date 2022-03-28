@@ -54,6 +54,15 @@ export const UserResolvers = {
         updateUser: async (_: any, { userInput }: any, context: IContext) => {
             return await User.findByIdAndUpdate(context.uid, userInput, { new: true });
         },
+        createUser: async (_: any, { createUserInput }: any, context: IContext) => {
+            const user = new User({
+                _id: context.uid,
+                name: createUserInput.name,
+                email: createUserInput.email,
+                phoneNumber: createUserInput.phoneNumber,
+            });
+            await user.save();
+        },
     },
 };
 
