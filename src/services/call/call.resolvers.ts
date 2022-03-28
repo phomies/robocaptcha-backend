@@ -15,7 +15,7 @@ export const CallResolvers = {
             const calls = await Call.find({ toUserId: user._id });
 
             return calls.sort((a, b) => {
-                const diff = a.dateTime - b.dateTime;
+                const diff = b.dateTime - a.dateTime;
 
                 if (diff == 0) {
                     return a.location.localeCompare(b.location);
