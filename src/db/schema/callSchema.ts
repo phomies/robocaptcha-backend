@@ -7,5 +7,5 @@ export const callSchema = new Schema({
     from: String,
     toUserId: { type: String, ref: 'User' },
     action: String,
-    location: String,
+    countryIso: String,
 });

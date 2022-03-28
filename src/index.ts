@@ -56,11 +56,11 @@ const server = new ApolloServer({
         } catch (error) {
             const code = (error as any).code;
 
-            if (code === 'auth/id-token-revoked') {
-                console.log('Revoked firebase access token');
-            } else if (code === 'auth/id-token-expired') {
-                console.log('Expired firebase access token');
-            }
+            // if (code === 'auth/id-token-revoked') {
+            //     console.log('Revoked firebase access token');
+            // } else if (code === 'auth/id-token-expired') {
+            //     console.log('Expired firebase access token');
+            // }
         }
     },
 });

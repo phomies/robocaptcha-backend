@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import faker from '@faker-js/faker';
 import moment from 'moment';
 import { Call, User, Notification, Contact } from '../../db';
+import { phone } from 'phone';
 
 export const DummyResolvers = {
     User: {
@@ -22,18 +23,19 @@ export const DummyResolvers = {
             const contacts = [];
             const calls = [];
             const notifications = [];
+            const phoneNumbers = getRandomPhoneNumbers(random);
 
             for (let i = 0; i < random; i++) {
                 const endDate = new Date();
                 const startDate = new Date();
                 startDate.setDate(endDate.getDate() - 7);
                 const action = getRandomAction();
-                const number = faker.phone.phoneNumber('+65########');
+                const number = phoneNumbers[i];
                 const datetime = getRandomDate(startDate, endDate);
 
                 const newContact = new Contact({
                     _id: new mongoose.Types.ObjectId(),
-                    number: number,
+                    number: number.phoneNumber,
                     name: faker.name.findName(),
                     userId: _id,
                 });
@@ -44,17 +46,18 @@ export const DummyResolvers = {
                         _id: new mongoose.Types.ObjectId(),
                         dateTime: datetime,
                         callSid: faker.datatype.uuid(),
-                        from: number,
+                        from: number.phoneNumber,
                         toUserId: _id,
                         action: action,
-                        location: faker.address.country(),
+                        countryIso: number.countryIso2,
+                        countryCode: number.countryCode,
                     });
                     calls.push(newCall.save());
 
                     const newNotif = new Notification({
                         _id: new mongoose.Types.ObjectId(),
                         userId: _id,
-                        content: getMatchingContent(action, number),
+                        content: getMatchingContent(action, number.phoneNumber),
                         read: false,
                         url: faker.internet.url(),
                         datetime: datetime,
@@ -89,6 +92,23 @@ const getRandomNumber = (min: number, max: number) => {
     max = Math.floor(max);
     // The maximum is inclusive and the minimum is inclusive
     return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+const getRandomPhoneNumbers = (amount: number) => {
+    const phoneNumbers = [];
+
+    while (phoneNumbers.length < amount) {
+        let rawNumber = faker.phone.phoneNumber();
+
+        rawNumber = (rawNumber.includes('x') && rawNumber.substring(0, rawNumber.indexOf('x') - 1)) || '';
+        const number = phone(rawNumber);
+
+        if (number.isValid) {
+            phoneNumbers.push(number);
+        }
+    }
+
+    return phoneNumbers;
 };
 
 const getRandomAction = () => {
