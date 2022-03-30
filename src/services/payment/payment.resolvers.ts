@@ -1,3 +1,5 @@
+import moment from 'moment';
+import mongoose from 'mongoose';
 import { IContext } from '../../common/interface';
 import { Payment } from '../../db';
 
@@ -21,6 +23,21 @@ export const PaymentResolvers = {
             });
 
             return payment;
+        },
+        deletePayment: async (_: any, __: any, context: IContext) => {
+            // Get their default FREE plan upon registration of account, retrieves latest document
+            const freePaymentPlan = await Payment.findOne({ plan: 'FREE', userId: context.uid }, {}, { sort: { dateStart: -1 } });
+            const paymentObject = freePaymentPlan.toObject();
+            const { _id, dateEnd, ...paymentDetails } = paymentObject;
+            const daysLeft = moment.duration(moment(dateEnd).diff(paymentDetails.dateStart)).asDays();
+
+            Object.assign(paymentDetails, {
+                _id: new mongoose.Types.ObjectId(),
+                dateEnd: moment().add(daysLeft, 'days'),
+            });
+
+            const newPayment = new Payment(paymentDetails);
+            await newPayment.save();
         },
     },
 };

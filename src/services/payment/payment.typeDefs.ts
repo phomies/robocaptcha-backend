@@ -28,5 +28,6 @@ export const PaymentTypeDefs = gql`
 
     extend type Mutation {
         upsertPayment(upsertPaymentInput: UpsertPaymentInput): Payment
+        deletePayment: Boolean
     }
 `;
