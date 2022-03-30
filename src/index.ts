@@ -55,7 +55,6 @@ const server = new ApolloServer({
             return { uid, fbToken, gapiToken };
         } catch (error) {
             const code = (error as any).code;
-
             // if (code === 'auth/id-token-revoked') {
             //     console.log('Revoked firebase access token');
             // } else if (code === 'auth/id-token-expired') {

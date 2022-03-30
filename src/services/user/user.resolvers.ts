@@ -2,6 +2,7 @@ import { Payment, User } from '../../db';
 import * as firebase from 'firebase-admin';
 import { IContext } from '../../common/interface';
 import moment from 'moment';
+import mongoose from 'mongoose';
 
 export const UserResolvers = {
     User: {
@@ -23,7 +24,6 @@ export const UserResolvers = {
                 if (!token) {
                     return;
                 }
-
                 const decodedToken = await firebase.auth().verifyIdToken(token);
                 const { uid, email, ...details } = decodedToken;
                 let user = await User.findOne({ _id: uid });
@@ -64,16 +64,16 @@ export const UserResolvers = {
             return await User.findByIdAndUpdate(context.uid, userInput, { new: true });
         },
         createUser: async (_: any, { createUserInput }: any, context: IContext) => {
-            const user = new User({
+            const newUser = new User({
                 _id: context.uid,
                 name: createUserInput.name,
                 email: createUserInput.email,
                 phoneNumber: createUserInput.phoneNumber,
             });
-            await user.save();
 
             const freePayment = new Payment({
-                userId: context.uid,
+                _id: new mongoose.Types.ObjectId(),
+                userId: newUser.id,
                 dateEnd: moment().add('1', 'month'),
                 plan: 'FREE',
             });
