@@ -7,7 +7,7 @@ export const contactSchema = new Schema(
         name: { type: String, default: '' },
         userId: { type: String, ref: 'User' },
         isBlacklisted: { type: Boolean, default: false },
-        isWhitelisted: { type: Boolean, default: false },
+        isWhitelisted: { type: Boolean, default: true },
     },
     { timestamps: true }
 );
