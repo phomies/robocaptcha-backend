@@ -5,7 +5,7 @@ export const paymentSchema = new Schema({
     userId: { type: String, ref: 'User' },
     dateStart: { type: Date, default: Date.now() },
     dateEnd: Date,
-    amount: Number,
-    transactionId: String,
+    amount: { type: Number, default: 0 },
+    transactionId: { type: String, default: '' },
     plan: String,
 });

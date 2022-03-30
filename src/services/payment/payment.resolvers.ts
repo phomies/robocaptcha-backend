@@ -3,8 +3,9 @@ import { Payment } from '../../db';
 
 export const PaymentResolvers = {
     User: {
-        payments: async (user: any) => {
-            const payments = await Payment.find({ userId: user._id });
+        payments: async (_: any, user: any) => {
+            let payments = await Payment.find({ userId: user._id });
+            payments = payments.sort((a, b) => b.dateStart - a.dateStart); // Latest subscription plan is the first
             return payments;
         },
     },

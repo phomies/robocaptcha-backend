@@ -1,6 +1,7 @@
-import { User } from '../../db';
+import { Payment, User } from '../../db';
 import * as firebase from 'firebase-admin';
 import { IContext } from '../../common/interface';
+import moment from 'moment';
 
 export const UserResolvers = {
     User: {
@@ -36,6 +37,14 @@ export const UserResolvers = {
 
                     await newUser.save();
                     user = await User.findOne({ _id: uid }); // Retrieve updated details
+
+                    // By default, all new accounts have free subscription plan
+                    const freePayment = new Payment({
+                        userId: uid,
+                        dateEnd: moment().add('1', 'month'),
+                        plan: 'FREE',
+                    });
+                    await freePayment.save();
                 }
 
                 return await firebase.auth().setCustomUserClaims(uid, { permissions: [...user.permissions] });
@@ -62,6 +71,13 @@ export const UserResolvers = {
                 phoneNumber: createUserInput.phoneNumber,
             });
             await user.save();
+
+            const freePayment = new Payment({
+                userId: context.uid,
+                dateEnd: moment().add('1', 'month'),
+                plan: 'FREE',
+            });
+            await freePayment.save();
         },
     },
 };
