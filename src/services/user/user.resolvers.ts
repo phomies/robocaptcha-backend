@@ -21,7 +21,7 @@ export const UserResolvers = {
         loginUser: async (_: any, __: any, context: IContext) => {
             try {
                 const token = context.fbToken;
-                if (!token) {
+                if (!token || !context.uid) {
                     return;
                 }
                 const decodedToken = await firebase.auth().verifyIdToken(token);
@@ -70,6 +70,7 @@ export const UserResolvers = {
                 email: createUserInput.email,
                 phoneNumber: createUserInput.phoneNumber,
             });
+            await newUser.save();
 
             const freePayment = new Payment({
                 _id: new mongoose.Types.ObjectId(),

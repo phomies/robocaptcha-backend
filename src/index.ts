@@ -44,7 +44,6 @@ const server = new ApolloServer({
         const fbToken = req.headers.fbtoken || '';
         const gapiToken = req.headers.gapitoken || '';
         let uid = '';
-
         try {
             if (fbToken) {
                 const decodedToken = await firebase.auth().verifyIdToken(String(fbToken));
