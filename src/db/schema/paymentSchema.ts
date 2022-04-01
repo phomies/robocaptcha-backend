@@ -8,4 +8,5 @@ export const paymentSchema = new Schema({
     amount: { type: Number, default: 0 },
     transactionId: { type: String, default: '' },
     plan: String,
+    isCancelled: { type: Boolean, default: false },
 });
