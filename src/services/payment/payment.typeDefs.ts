@@ -11,6 +11,7 @@ export const PaymentTypeDefs = gql`
         amount: Float
         transactionId: String
         plan: String
+        isCancelled: Boolean
     }
 
     input UpsertPaymentInput {
