@@ -32,7 +32,7 @@ export const UserTypeDefs = gql`
     extend type Query {
         getAllUsers: [User]
         getUser: User
-        loginUser: String
+        loginUser: Boolean
     }
 
     extend type Mutation {

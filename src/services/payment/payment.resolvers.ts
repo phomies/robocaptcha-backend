@@ -27,7 +27,7 @@ export const PaymentResolvers = {
         deletePayment: async (_: any, __: any, context: IContext) => {
             // Get their default FREE plan upon registration of account, retrieves latest document
             const freePaymentPlan = await Payment.findOneAndUpdate(
-                { plan: 'FREE', userId: context.uid, isCancelled: false },
+                { userId: context.uid, isCancelled: false },
                 { isCancelled: true },
                 { sort: { dateStart: -1 } }
             );

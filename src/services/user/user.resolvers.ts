@@ -27,8 +27,10 @@ export const UserResolvers = {
                 const decodedToken = await firebase.auth().verifyIdToken(token);
                 const { uid, email, ...details } = decodedToken;
                 let user = await User.findOne({ _id: uid });
+                let isUserExist = true;
 
                 if (!user) {
+                    isUserExist = false;
                     const newUser = new User({
                         _id: uid,
                         name: email?.substring(0, email.indexOf('@')), // Set username as email ID
@@ -47,7 +49,9 @@ export const UserResolvers = {
                     await freePayment.save();
                 }
 
-                return await firebase.auth().setCustomUserClaims(uid, { permissions: [...user.permissions] });
+                await firebase.auth().setCustomUserClaims(uid, { permissions: [...user.permissions] });
+
+                return isUserExist;
             } catch (error) {
                 console.log('Invalid token');
             }
