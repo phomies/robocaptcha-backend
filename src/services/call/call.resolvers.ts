@@ -15,7 +15,7 @@ export const CallResolvers = {
             const calls = await Call.find({ toUserId: user._id });
 
             return calls.sort((a, b) => {
-                const diff = b.dateTime - a.dateTime;
+                const diff = new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime();
 
                 if (diff == 0) {
                     return a.location.localeCompare(b.location);
@@ -70,11 +70,19 @@ export const CallResolvers = {
                     }
                 }
             }
+            console.log(callsReceivedByDate, oneWeekBefore)
 
             // Total calls includes calls that are one week before
             const oldCalls = totalCalls - newCalls;
             const rawNewCallsPercentage = Math.round(((newCalls - oldCalls) / oldCalls) * 100);
-            const newCallsPercentage = `${rawNewCallsPercentage < 0 ? rawNewCallsPercentage : '+' + rawNewCallsPercentage}%`;
+            let newCallsPercentage = '0%';
+
+            if (rawNewCallsPercentage <= 0) {
+                newCallsPercentage = `${rawNewCallsPercentage}%`;
+            } else if (rawNewCallsPercentage > 0) {
+                newCallsPercentage = `%${rawNewCallsPercentage}%`;
+            }
+
             const callsReceived: CallReceive[] = [];
             callsReceivedByDate.forEach((value, key) => {
                 callsReceived.push({
@@ -84,7 +92,7 @@ export const CallResolvers = {
                 });
             });
 
-            callsReceived.sort((a, b) => a.dateTime.localeCompare(b.dateTime));
+            callsReceived.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
             return { callsReceived, weeklyBlockedCalls, totalBlockedCalls, newCalls, newCallsPercentage };
         },
     },
