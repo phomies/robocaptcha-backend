@@ -10,7 +10,7 @@ type Value = {
 };
 
 const SUCCESS_STATES = ['success', 'whitelisted'];
-const FAILURE_STATES = ['blocked', 'timeout'];
+const FAILURE_STATES = ['blocked', 'timeout', 'blacklisted'];
 
 export const CallResolvers = {
     User: {
