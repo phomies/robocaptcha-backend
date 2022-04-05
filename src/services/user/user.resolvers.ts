@@ -3,6 +3,7 @@ import * as firebase from 'firebase-admin';
 import { IContext } from '../../common/interface';
 import moment from 'moment';
 import mongoose from 'mongoose';
+import { TUser } from './user.interface';
 
 export const UserResolvers = {
     User: {
@@ -59,10 +60,20 @@ export const UserResolvers = {
     },
     Mutation: {
         deleteUser: async (_: any, __: any, context: IContext) => {
+            const { email } = await User.findById(context.uid);
             const { deletedCount } = await User.deleteOne({ _id: context.uid });
             if (deletedCount === 0) {
                 throw new Error('User does not exist');
             }
+
+            const toDeleteAccounts: string[] = [];
+            const userAccounts = await firebase.auth().listUsers(1000);
+            userAccounts.users.forEach((user) => {
+                const userData = user.toJSON() as TUser;
+                if (userData['email'] === email) toDeleteAccounts.push(userData['uid']);
+            });
+
+            await firebase.auth().deleteUsers(toDeleteAccounts);
         },
         updateUser: async (_: any, { userInput }: any, context: IContext) => {
             return await User.findByIdAndUpdate(context.uid, userInput, { new: true });
