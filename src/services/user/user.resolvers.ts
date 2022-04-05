@@ -91,7 +91,9 @@ export const UserResolvers = {
             await firebase.auth().deleteUsers(toDeleteAccounts);
         },
         updateUser: async (_: any, { userInput }: any, context: IContext) => {
-            return await User.findByIdAndUpdate(context.uid, userInput, { new: true });
+            return await User.findOneAndUpdate({ $or: [{ _id: context.uid }, { googleProviderUid: context.uid }] }, userInput, {
+                new: true,
+            });
         },
         createUser: async (_: any, { createUserInput }: any, context: IContext) => {
             const userData = {
