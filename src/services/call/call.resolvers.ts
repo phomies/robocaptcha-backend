@@ -70,7 +70,6 @@ export const CallResolvers = {
                     }
                 }
             }
-            console.log(callsReceivedByDate, oneWeekBefore)
 
             // Total calls includes calls that are one week before
             const oldCalls = totalCalls - newCalls;
