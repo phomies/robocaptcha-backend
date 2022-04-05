@@ -33,6 +33,7 @@ export const UserTypeDefs = gql`
         getAllUsers: [User]
         getUser: User
         loginUser: Boolean
+        checkUser(email: String): Boolean
     }
 
     extend type Mutation {

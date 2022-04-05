@@ -20,6 +20,10 @@ export const UserResolvers = {
             console.log(context.uid);
             return await getUser(context.uid);
         },
+        checkUser: async (_: any, { email }: any, context: IContext) => {
+            const isExist = await User.exists({ email: email });
+            return isExist ? true : false;
+        },
         loginUser: async (_: any, __: any, context: IContext) => {
             try {
                 const token = context.fbToken;
