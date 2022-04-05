@@ -15,8 +15,8 @@ const FAILURE_STATES = ['blocked', 'timeout', 'blacklisted'];
 export const CallResolvers = {
     User: {
         calls: async (user: any) => {
-            const calls = await Call.find({ $or: [{ userId: user._id }, { userId: user.googleProviderUid }] });
-
+            const calls = await Call.find({ $or: [{ toUserId: user._id }, { toUserId: user.googleProviderUid }] });
+            console.log(calls)
             return calls.sort((a, b) => {
                 const diff = new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime();
 
@@ -29,9 +29,12 @@ export const CallResolvers = {
     },
     Query: {
         getCallSummary: async (_: any, __: any, context: IContext) => {
-            console.log(context)
             const currentUser = await User.findOne({ $or: [{ _id: context.uid }, { googleProviderUid: context.uid }]});
+            console.log(context)
+            console.log(currentUser)
             const calls = await Call.find({ $or: [{ toUserId: currentUser._id }, { toUserId: currentUser.googleProviderId }]});
+            console.log(calls)
+
 
             const oneWeekBefore = moment(new Date()).subtract(6, 'days');
             const twoWeeksBefore = moment(new Date()).subtract(13, 'days');
