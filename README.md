@@ -1,5 +1,7 @@
 ## RoboCaptcha Backend
 
+The backend service for roboCaptcha, providing the server side features using Apollo Server GraphQL and MongoDB database. Notable features include user authentication and management, payment system with Stripe and database methods and management.
+
 ### Environment Variables
 | Name        | Description                                            |
 | ----------- | ------------------------------------------------------ |
