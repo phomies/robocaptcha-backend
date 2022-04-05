@@ -18,7 +18,7 @@ export const CallResolvers = {
                 const diff = new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime();
 
                 if (diff == 0) {
-                    return a.location.localeCompare(b.location);
+                    return a.countryIso.localeCompare(b.location);
                 }
                 return diff;
             });
