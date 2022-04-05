@@ -75,7 +75,6 @@ export const UserResolvers = {
             userAccounts.users.forEach((user) => {
                 const userData = user.toJSON() as TUser;
                 const userUid = userData.uid;
-                console.log(userData);
 
                 if (userData.email === email) {
                     toDeleteAccounts.push(userUid);

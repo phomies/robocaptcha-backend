@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { IContext } from '../../common/interface';
-import { Contact } from '../../db';
+import { Contact, User } from '../../db';
 import { Connection } from './contact.interface';
 
 const GOOGLE_API_URL = 'https://people.googleapis.com/v1/people/me/connections?personFields=names,phoneNumbers';
@@ -35,13 +35,17 @@ export const ContactResolvers = {
     Mutation: {
         upsertContact: async (_: any, { upsertContactInput }: any, context: IContext) => {
             const { number, ...contactDetails } = upsertContactInput;
-            const userId = context.uid;
-            Object.assign(contactDetails, { userId: userId });
+            const currentUser = await User.findOne({ $or: [{ _id: context.uid }, { googleProviderUid: context.uid }] });
+            Object.assign(contactDetails, { userId: context.uid });
 
-            const contact = await Contact.findOneAndUpdate({ number: number, userId: userId }, contactDetails, {
-                new: true,
-                upsert: true,
-            });
+            const contact = await Contact.findOneAndUpdate(
+                { $and: [{ number: number }, { $or: [{ userId: currentUser.uid }, { userId: currentUser.googleProviderUid }] }] },
+                contactDetails,
+                {
+                    new: true,
+                    upsert: true,
+                }
+            );
 
             return contact;
         },
