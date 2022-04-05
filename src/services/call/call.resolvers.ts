@@ -10,6 +10,7 @@ type Value = {
 };
 
 const SUCCESS_STATES = ['success', 'whitelisted'];
+const FAILURE_STATES = ['blocked', 'timeout'];
 
 export const CallResolvers = {
     User: {
@@ -32,7 +33,7 @@ export const CallResolvers = {
 
             const oneWeekBefore = moment(new Date()).subtract(6, 'days');
             const twoWeeksBefore = moment(new Date()).subtract(13, 'days');
-            const totalBlockedCalls = calls.filter((call) => call.action === 'blocked').length;
+            const totalBlockedCalls = calls.filter((call) => FAILURE_STATES.includes(call.action)).length;
             const callsReceivedByDate = new Map<string, Value>();
 
             let tempDate = moment(new Date()).subtract(6, 'days');
@@ -67,7 +68,7 @@ export const CallResolvers = {
                 if (moment(call.dateTime).isAfter(oneWeekBefore)) {
                     newCalls++;
 
-                    if (call.action === 'blocked') {
+                    if (FAILURE_STATES.includes(call.action)) {
                         weeklyBlockedCalls++;
                     }
                 }
