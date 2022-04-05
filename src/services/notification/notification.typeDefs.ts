@@ -6,6 +6,7 @@ export const NotificationTypeDefs = gql`
     type Notification @key(fields: "_id") {
         _id: ID
         userId: String
+        googleId: String
         content: String
         read: Boolean
         url: String
