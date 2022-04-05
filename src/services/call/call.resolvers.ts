@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import moment from 'moment';
-import { Call } from '../../db';
+import { Call, User } from '../../db';
 import { IContext } from '../../common/interface';
 import { CallReceive } from './call.interface';
 
@@ -8,6 +8,9 @@ type Value = {
     callsAccepted: number;
     callsRejected: number;
 };
+
+const SUCCESS_STATES = ['success', 'whitelisted'];
+const FAILURE_STATES = ['blocked', 'timeout', 'blacklisted'];
 
 export const CallResolvers = {
     User: {
@@ -26,11 +29,13 @@ export const CallResolvers = {
     },
     Query: {
         getCallSummary: async (_: any, __: any, context: IContext) => {
-            const calls = await Call.find({ toUserId: context.uid });
+            console.log(context)
+            const currentUser = await User.findOne({ $or: [{ _id: context.uid }, { googleProviderUid: context.uid }]});
+            const calls = await Call.find({ $or: [{ toUserId: currentUser._id }, { toUserId: currentUser.googleProviderId }]});
 
             const oneWeekBefore = moment(new Date()).subtract(6, 'days');
             const twoWeeksBefore = moment(new Date()).subtract(13, 'days');
-            const totalBlockedCalls = calls.filter((call) => call.action === 'blocked').length;
+            const totalBlockedCalls = calls.filter((call) => FAILURE_STATES.includes(call.action)).length;
             const callsReceivedByDate = new Map<string, Value>();
 
             let tempDate = moment(new Date()).subtract(6, 'days');
@@ -47,7 +52,7 @@ export const CallResolvers = {
 
             for (const call of calls) {
                 const date = moment(call.dateTime).format('DD/MM/YYYY');
-                const isCallAccepted = call.action === 'success';
+                const isCallAccepted = SUCCESS_STATES.includes(call.action);
 
                 const callData = callsReceivedByDate.get(date);
 
@@ -65,7 +70,7 @@ export const CallResolvers = {
                 if (moment(call.dateTime).isAfter(oneWeekBefore)) {
                     newCalls++;
 
-                    if (call.action === 'blocked') {
+                    if (FAILURE_STATES.includes(call.action)) {
                         weeklyBlockedCalls++;
                     }
                 }
