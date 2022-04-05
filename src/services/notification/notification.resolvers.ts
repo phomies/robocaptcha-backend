@@ -5,7 +5,7 @@ import { Notification } from '../../db';
 export const NotificationResolvers = {
     User: {
         notifications: async (user: any) => {
-            const notifications = await Notification.find({ userId: user._id });
+            const notifications = await Notification.find({ $or: [{ userId: user._id }, { userId: user.googleProviderUid }] });
             return notifications;
         },
     },
@@ -35,5 +35,3 @@ export const NotificationResolvers = {
         },
     },
 };
-
-

@@ -12,7 +12,7 @@ type Value = {
 export const CallResolvers = {
     User: {
         calls: async (user: any) => {
-            const calls = await Call.find({ toUserId: user._id });
+            const calls = await Call.find({ $or: [{ userId: user._id }, { userId: user.googleProviderUid }] });
 
             return calls.sort((a, b) => {
                 const diff = new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime();
