@@ -39,7 +39,7 @@ export const ContactResolvers = {
             Object.assign(contactDetails, { userId: context.uid });
 
             const contact = await Contact.findOneAndUpdate(
-                { $and: [{ number: number }, { $or: [{ userId: currentUser.uid }, { userId: currentUser.googleProviderUid }] }] },
+                { $and: [{ number: number }, { $or: [{ userId: currentUser._id }, { userId: currentUser.googleProviderUid }] }] },
                 contactDetails,
                 {
                     new: true,
