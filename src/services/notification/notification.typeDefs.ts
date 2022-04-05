@@ -9,7 +9,6 @@ export const NotificationTypeDefs = gql`
         googleId: String
         content: String
         read: Boolean
-        url: String
         dateTime: Date
     }
 

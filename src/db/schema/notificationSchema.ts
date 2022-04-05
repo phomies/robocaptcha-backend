@@ -6,6 +6,5 @@ export const notificationSchema = new Schema({
     googleId: { type: String, default: '' },
     content: String,
     read: Boolean,
-    url: String,
     dateTime: { type: Date, default: Date.now() },
 });
