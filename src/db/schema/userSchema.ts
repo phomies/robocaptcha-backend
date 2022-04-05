@@ -2,6 +2,7 @@ import { Schema } from 'mongoose';
 
 export const userSchema = new Schema({
     _id: String,
+    googleProviderUid: String,
     name: String,
     email: String,
     phoneNumber: { type: String, default: '' },

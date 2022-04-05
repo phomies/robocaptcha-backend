@@ -22,6 +22,7 @@ export const UserResolvers = {
         },
         checkUser: async (_: any, { email }: any, context: IContext) => {
             const isExist = await User.exists({ email: email });
+            console.log(email, isExist);
             return isExist ? true : false;
         },
         loginUser: async (_: any, __: any, context: IContext) => {
@@ -94,12 +95,16 @@ export const UserResolvers = {
             return await User.findByIdAndUpdate(context.uid, userInput, { new: true });
         },
         createUser: async (_: any, { createUserInput }: any, context: IContext) => {
-            const newUser = new User({
+            const userData = {
                 _id: context.uid,
                 name: createUserInput.name,
                 email: createUserInput.email,
                 phoneNumber: createUserInput.phoneNumber,
-            });
+            };
+            createUserInput.googleProviderUid &&
+                Object.assign(userData, { googleProviderUid: createUserInput.googleProviderUid });
+
+            const newUser = new User(userData);
             await newUser.save();
 
             const freePayment = new Payment({

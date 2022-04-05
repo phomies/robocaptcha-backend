@@ -5,6 +5,7 @@ export const UserTypeDefs = gql`
 
     type User @key(fields: "_id") {
         _id: String
+        googleProviderUid: String
         name: String
         password: String
         email: String
@@ -27,6 +28,7 @@ export const UserTypeDefs = gql`
         name: String!
         email: String!
         phoneNumber: String!
+        googleProviderUid: String
     }
 
     extend type Query {
