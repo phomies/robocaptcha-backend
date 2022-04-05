@@ -64,8 +64,8 @@ export const UserResolvers = {
     },
     Mutation: {
         deleteUser: async (_: any, __: any, context: IContext) => {
-            const { email } = await User.findById(context.uid);
-            const { deletedCount } = await User.deleteOne({ _id: context.uid });
+            const { email } = await User.findOne({ $or: [{ _id: context.uid }, { googleProviderUid: context.uid }] });
+            const { deletedCount } = await User.deleteOne({ $or: [{ _id: context.uid }, { googleProviderUid: context.uid }] });
             if (deletedCount === 0) {
                 throw new Error('User does not exist');
             }
@@ -75,6 +75,7 @@ export const UserResolvers = {
             userAccounts.users.forEach((user) => {
                 const userData = user.toJSON() as TUser;
                 const userUid = userData.uid;
+                console.log(userData);
 
                 if (userData.email === email) {
                     toDeleteAccounts.push(userUid);
