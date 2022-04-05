@@ -28,12 +28,12 @@ export const CallResolvers = {
         getCallSummary: async (_: any, __: any, context: IContext) => {
             const calls = await Call.find({ toUserId: context.uid });
 
-            const oneWeekBefore = moment().subtract(6, 'days');
-            const twoWeeksBefore = moment().subtract(13, 'days');
+            const oneWeekBefore = moment(new Date()).subtract(6, 'days');
+            const twoWeeksBefore = moment(new Date()).subtract(13, 'days');
             const totalBlockedCalls = calls.filter((call) => call.action === 'blocked').length;
             const callsReceivedByDate = new Map<string, Value>();
 
-            let tempDate = oneWeekBefore;
+            let tempDate = moment(new Date()).subtract(6, 'days');
             for (let i = 0; i < 7; i++) {
                 callsReceivedByDate.set(tempDate.format('DD/MM/YYYY'), {
                     callsAccepted: 0,
@@ -76,10 +76,12 @@ export const CallResolvers = {
             const rawNewCallsPercentage = Math.round(((newCalls - oldCalls) / oldCalls) * 100);
             let newCallsPercentage = '0%';
 
-            if (rawNewCallsPercentage <= 0) {
+            if (rawNewCallsPercentage == Infinity) {
+                newCallsPercentage = ``;
+            } else if (rawNewCallsPercentage <= 0) {
                 newCallsPercentage = `${rawNewCallsPercentage}%`;
             } else if (rawNewCallsPercentage > 0) {
-                newCallsPercentage = `%${rawNewCallsPercentage}%`;
+                newCallsPercentage = `+${rawNewCallsPercentage}%`;
             }
 
             const callsReceived: CallReceive[] = [];
