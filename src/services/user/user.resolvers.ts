@@ -17,6 +17,7 @@ export const UserResolvers = {
             return users;
         },
         getUser: async (_: any, __: any, context: IContext) => {
+            console.log(context.uid);
             return await getUser(context.uid);
         },
         loginUser: async (_: any, __: any, context: IContext) => {
@@ -70,7 +71,17 @@ export const UserResolvers = {
             const userAccounts = await firebase.auth().listUsers(1000);
             userAccounts.users.forEach((user) => {
                 const userData = user.toJSON() as TUser;
-                if (userData['email'] === email) toDeleteAccounts.push(userData['uid']);
+                const userUid = userData.uid;
+
+                if (userData.email === email) {
+                    toDeleteAccounts.push(userUid);
+                } else if (userData.providerData) {
+                    const googleProvider = userData.providerData.filter((data) => data.providerId === 'google.com');
+
+                    if (googleProvider && googleProvider.length > 0 && googleProvider[0].email === email) {
+                        toDeleteAccounts.push(userUid);
+                    }
+                }
             });
 
             await firebase.auth().deleteUsers(toDeleteAccounts);
