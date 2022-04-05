@@ -119,7 +119,8 @@ export const UserResolvers = {
 };
 
 const getUser = async (_id: string) => {
-    const user = await User.findById(_id);
+    // Search users by either email provider id or google provider id
+    const user = await User.findOne({ $or: [{ _id: _id }, { googleProviderUid: _id }] });
     if (!user) {
         throw new Error('User does not exist');
     }

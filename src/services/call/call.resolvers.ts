@@ -92,7 +92,25 @@ export const CallResolvers = {
             });
 
             callsReceived.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
-            return { callsReceived, weeklyBlockedCalls, totalBlockedCalls, newCalls, newCallsPercentage };
+            const callsAccepted: number[] = [];
+            const callsRejected: number[] = [];
+            const dateTimes: string[] = [];
+
+            callsReceived.forEach((call) => {
+                dateTimes.push(call.dateTime);
+                callsAccepted.push(call.callsAccepted);
+                callsRejected.push(call.callsRejected);
+            });
+
+            return {
+                callsAccepted,
+                callsRejected,
+                dateTimes,
+                weeklyBlockedCalls,
+                totalBlockedCalls,
+                newCalls,
+                newCallsPercentage,
+            };
         },
     },
     Mutation: {

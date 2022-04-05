@@ -20,7 +20,9 @@ export const CallTypeDefs = gql`
     }
 
     type CallSummary {
-        callsReceived: [ReceivedCall]
+        callsAccepted: [Int]
+        callsRejected: [Int]
+        dateTimes: [String]
         weeklyBlockedCalls: Int
         totalBlockedCalls: Int
         newCalls: Int
