@@ -3,7 +3,7 @@ import { gql } from 'apollo-server';
 export const UserTypeDefs = gql`
     scalar Date
 
-    type User @key(fields: "_id") {
+    type User @key(fields: "_id googleProviderUid") {
         _id: String
         googleProviderUid: String
         name: String

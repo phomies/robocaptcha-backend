@@ -22,8 +22,9 @@ export const PaymentTypeDefs = gql`
         plan: String!
     }
 
-    extend type User @key(fields: "_id") {
+    extend type User @key(fields: "_id googleProviderUid") {
         _id: String @external
+        googleProviderUid: String @external
         payments: [Payment]
     }
 

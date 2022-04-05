@@ -8,7 +8,7 @@ const GOOGLE_API_URL = 'https://people.googleapis.com/v1/people/me/connections?p
 export const ContactResolvers = {
     User: {
         contacts: async (user: any) => {
-            const contacts = await Contact.find({ userId: user._id });
+            const contacts = await Contact.find({ $or: [{ userId: user._id }, { userId: user.googleProviderUid }] });
             return contacts;
         },
     },

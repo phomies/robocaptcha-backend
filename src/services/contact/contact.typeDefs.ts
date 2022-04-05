@@ -21,8 +21,9 @@ export const ContactTypeDefs = gql`
         isBlacklisted: Boolean
     }
 
-    extend type User @key(fields: "_id") {
+    extend type User @key(fields: "_id googleProviderUid") {
         _id: String @external
+        googleProviderUid: String @external
         contacts: [Contact]
     }
 

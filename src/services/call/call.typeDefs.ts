@@ -1,4 +1,4 @@
-import { gql } from "apollo-server";
+import { gql } from 'apollo-server';
 
 export const CallTypeDefs = gql`
     scalar Date
@@ -37,11 +37,12 @@ export const CallTypeDefs = gql`
         action: String
     }
 
-    extend type User @key(fields: "_id") {
+    extend type User @key(fields: "_id googleProviderUid") {
         _id: String @external
+        googleProviderUid: String @external
         calls: [Call]
     }
-    
+
     extend type Query {
         getCallSummary: CallSummary
     }

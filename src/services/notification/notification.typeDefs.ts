@@ -19,8 +19,9 @@ export const NotificationTypeDefs = gql`
         dateTime: Date
     }
 
-    extend type User @key(fields: "_id") {
+    extend type User @key(fields: "_id googleProviderUid") {
         _id: String @external
+        googleProviderUid: String @external
         notifications: [Notification]
     }
 

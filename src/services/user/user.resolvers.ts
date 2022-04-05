@@ -8,6 +8,7 @@ import { TUser } from './user.interface';
 export const UserResolvers = {
     User: {
         __resolveReference: async (ref: any) => {
+            console.log(ref, "here")
             return await getUser(ref._id);
         },
     },
@@ -17,12 +18,10 @@ export const UserResolvers = {
             return users;
         },
         getUser: async (_: any, __: any, context: IContext) => {
-            console.log(context.uid);
             return await getUser(context.uid);
         },
         checkUser: async (_: any, { email }: any, context: IContext) => {
             const isExist = await User.exists({ email: email });
-            console.log(email, isExist);
             return isExist ? true : false;
         },
         loginUser: async (_: any, __: any, context: IContext) => {
