@@ -9,6 +9,8 @@ type Value = {
     callsRejected: number;
 };
 
+const SUCCESS_STATES = ['success', 'whitelisted'];
+
 export const CallResolvers = {
     User: {
         calls: async (user: any) => {
@@ -47,7 +49,7 @@ export const CallResolvers = {
 
             for (const call of calls) {
                 const date = moment(call.dateTime).format('DD/MM/YYYY');
-                const isCallAccepted = call.action === 'success';
+                const isCallAccepted = SUCCESS_STATES.includes(call.action);
 
                 const callData = callsReceivedByDate.get(date);
 
