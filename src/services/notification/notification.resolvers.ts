@@ -6,6 +6,8 @@ export const NotificationResolvers = {
     User: {
         notifications: async (user: any) => {
             const notifications = await Notification.find({ $or: [{ userId: user._id }, { userId: user.googleProviderUid }] });
+            notifications.sort((a, b) => b.dateTime - a.dateTime);
+
             return notifications;
         },
     },

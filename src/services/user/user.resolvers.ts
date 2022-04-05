@@ -8,8 +8,7 @@ import { TUser } from './user.interface';
 export const UserResolvers = {
     User: {
         __resolveReference: async (ref: any) => {
-            console.log(ref, "here")
-            return await getUser(ref._id);
+            return await getUser('_id' in ref ? ref._id : ref.googleProviderUid);
         },
     },
     Query: {
