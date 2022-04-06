@@ -3,7 +3,7 @@ import { ApolloGateway, IntrospectAndCompose, RemoteGraphQLDataSource } from '@a
 import { ApolloServer } from 'apollo-server';
 import { PORTS } from './utils/ports';
 import waitOn from 'wait-on';
-import { ApolloServerPluginInlineTraceDisabled } from 'apollo-server-core';
+import { ApolloServerPluginInlineTraceDisabled, ApolloServerPluginLandingPageDisabled } from 'apollo-server-core';
 import { initFirebase } from './auth';
 import * as firebase from 'firebase-admin';
 
@@ -39,7 +39,7 @@ const gateway = new ApolloGateway({
 
 const server = new ApolloServer({
     gateway: gateway,
-    plugins: [ApolloServerPluginInlineTraceDisabled()],
+    plugins: [ApolloServerPluginInlineTraceDisabled(), ApolloServerPluginLandingPageDisabled()],
     context: async ({ req }) => {
         const fbToken = req.headers.fbtoken || '';
         const gapiToken = req.headers.gapitoken || '';
